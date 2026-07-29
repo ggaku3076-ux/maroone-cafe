@@ -12,7 +12,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0" aria-hidden="true">
         <img
           src="/Asset/BACKGROUN SECTION 1 .png"
-          alt="Maroone Caffe & Food F&B Hero Image"
+          alt="Maroone Caffe Hero Image"
           className="h-full w-full object-cover object-center"
         />
       </div>
@@ -29,14 +29,14 @@ export default function Hero() {
             MAROONE&apos;
           </h1>
 
-          {/* Subheading / Tagline in Inter */}
+          {/* Subheading with Inter for '&' symbol as requested */}
           <p className="font-didot-italic text-lg sm:text-2xl text-white/95 font-normal tracking-wide drop-shadow-sm">
-            Caffe &amp; Food F&amp;B Surabaya
+            Caffe <span className="font-inter font-normal">&amp;</span> Food F<span className="font-inter font-normal">&amp;</span>B
           </p>
 
-          {/* Rich SEO Description explaining what Maroone' Caffe is */}
+          {/* Rich SEO Description explaining Maroone' Caffe & Food F&B */}
           <p className="font-inter text-xs sm:text-sm text-white/90 leading-relaxed font-normal tracking-wide drop-shadow-sm max-w-md">
-            Maroone&apos; Caffe &amp; Food F&amp;B adalah destinasi kafe dan tempat santai modern di Surabaya yang menyajikan racikan kopi autentik berbasis Espresso (biji Arabika &amp; Robusta pilihan) serta sajian makanan dan minuman spesial dalam atmosfer Maroon yang hangat dan tenang.
+            Maroone&apos; Caffe <span className="font-inter font-normal">&amp;</span> Food F<span className="font-inter font-normal">&amp;</span>B adalah destinasi kafe dan ruang santai modern di Kabupaten Jombang yang menyajikan racikan kopi autentik berbasis Espresso (biji Arabika &amp; Robusta pilihan) serta sajian kuliner istimewa dalam atmosfer Maroon yang hangat dan tenang.
           </p>
 
           {/* Clean Action Buttons */}

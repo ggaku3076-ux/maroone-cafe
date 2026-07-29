@@ -37,10 +37,14 @@ export default function Navbar() {
     return pathname.startsWith(href);
   };
 
+  // Determine if on light background page (/wfc or /lokasi) where text needs to be maroon/red (#5b0612)
+  const isLightPage = pathname === "/wfc" || pathname === "/lokasi";
+  const textColor = isLightPage ? "text-[#5b0612]" : "text-white";
+  const underlineColor = isLightPage ? "after:bg-[#5b0612]" : "after:bg-white";
+
   return (
     <>
-      {/* Transparent Header as requested */}
-      <header className="absolute top-0 left-0 w-full z-50 bg-transparent text-white border-b-0">
+      <header className="absolute top-0 left-0 w-full z-50 bg-transparent border-b-0">
         <div className="mx-auto flex items-center justify-between max-w-7xl px-6 py-5 md:px-8">
           
           {/* Left: Logo & Brand Name */}
@@ -50,14 +54,14 @@ export default function Navbar() {
             aria-label="Maroone Caffe - Kembali ke Beranda"
           >
             {/* Logo bulat bundar */}
-            <div className="relative h-11 w-11 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#3b040b] flex items-center justify-center shadow-md">
+            <div className="relative h-11 w-11 shrink-0 rounded-full aspect-square overflow-hidden border border-[#5b0612]/30 bg-[#3b040b] flex items-center justify-center shadow-md">
               <img
-                src="/Asset/LOGO.png"
+                src="/icon.png"
                 alt="Maroone Logo"
                 className="h-full w-full object-cover rounded-full"
               />
             </div>
-            <span className="font-didot-italic text-xl text-white tracking-wider drop-shadow-sm">
+            <span className={`font-didot-italic text-xl ${textColor} tracking-wider drop-shadow-sm`}>
               MAROONE&apos;
             </span>
           </Link>
@@ -70,10 +74,10 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-xs font-inter tracking-wider transition-colors duration-200 py-1 relative drop-shadow-sm after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 ${
+                  className={`text-xs font-inter tracking-wider transition-colors duration-200 py-1 relative drop-shadow-sm after:absolute after:-bottom-1 after:left-0 after:h-0.5 ${underlineColor} after:transition-all after:duration-300 ${
                     active 
-                      ? "text-white font-medium after:w-full" 
-                      : "text-white/80 hover:text-white after:w-0 hover:after:w-full"
+                      ? `${textColor} font-medium after:w-full` 
+                      : `${isLightPage ? "text-[#5b0612]/80 hover:text-[#5b0612]" : "text-white/80 hover:text-white"} after:w-0 hover:after:w-full`
                   }`}
                 >
                   {link.name}
@@ -86,17 +90,21 @@ export default function Navbar() {
           <div className="hidden md:flex justify-end">
             <Link
               href="/rsvp"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2 text-xs font-inter text-[#5b0612] hover:bg-white/90 transition-all duration-300 shadow-md"
+              className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs font-inter transition-all duration-300 shadow-md ${
+                isLightPage
+                  ? "bg-[#5b0612] text-white hover:bg-[#7d0919]"
+                  : "bg-white text-[#5b0612] hover:bg-white/90"
+              }`}
             >
               <span>Reservasi Meja</span>
-              <ArrowRight className="h-3.5 w-3.5 text-[#5b0612]" aria-hidden="true" />
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
             </Link>
           </div>
 
           {/* Mobile: Hamburger toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center justify-center p-2 md:hidden text-white relative w-10 h-10 drop-shadow-sm"
+            className={`flex items-center justify-center p-2 md:hidden ${textColor} relative w-10 h-10 drop-shadow-sm`}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
             aria-label={isOpen ? "Tutup menu" : "Buka menu"}
@@ -144,7 +152,7 @@ export default function Navbar() {
           <div className="flex flex-col items-center gap-2 text-center">
             <div className="relative h-14 w-14 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#3b040b]">
               <img
-                src="/Asset/LOGO.png"
+                src="/icon.png"
                 alt="Maroone Logo"
                 className="h-full w-full object-cover rounded-full"
               />

@@ -18,7 +18,7 @@ export default function AIChatbot() {
     {
       id: "welcome-1",
       sender: "bot",
-      text: "Selamat datang di Maroone' Caffe! ☕\nSaya asisten interaktif siap membantu menjelaskan varian menu Espresso Based, perbedaan biji Arabika & Robusta, hingga rekomendasi sajian kopi terbaik. Ada yang ingin Anda tanyakan?",
+      text: "Selamat datang di Maroone' Caffe & Food! ☕\nSaya asisten AI siap membantu menjelaskan varian menu Espresso Based, perbedaan biji Arabika & Robusta, lokasi Jombang, hingga rekomendasi sajian kopi terbaik. Ada yang ingin Anda tanyakan?",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     },
   ]);
@@ -30,6 +30,7 @@ export default function AIChatbot() {
     "Rekomendasi kopi segar?",
     "Apa itu Magic Coffee?",
     "Daftar harga menu lengkap",
+    "Alamat & lokasi Maroone",
   ];
 
   const scrollToBottom = () => {
@@ -42,52 +43,7 @@ export default function AIChatbot() {
     }
   }, [messages, isOpen, isTyping]);
 
-  const generateBotResponse = (userQuery: string): string => {
-    const query = userQuery.toLowerCase();
-
-    if (query.includes("beda") || query.includes("arabika") || query.includes("robusta") || query.includes("biji")) {
-      return "Di Maroone' Caffe, kami menyediakan 2 karakter biji kopi pilihan:\n\n" +
-        "• Arabika: Karakter rasa lebih fruity, aroma manis, dan asam segar yang lembut.\n" +
-        "• Robusta: Karakter taste bold, nutty, kekentalan tinggi (full body), dan kafein mantap.\n\n" +
-        "Varian Americano, Cappuccino, dan Caffe Latte dapat disajikan menggunakan Arabika atau Robusta!";
-    }
-
-    if (query.includes("magic") || query.includes("magic coffee")) {
-      return "MAGIC Coffee (Arabika - Hot 23K):\n" +
-        "Magic adalah sajian kopi khas Melbourne berbasis Double Ristretto dengan steamed milk lembut. Rasanya sangat seimbang dan manis alami susu menonjol!";
-    }
-
-    if (query.includes("segar") || query.includes("lemonade") || query.includes("dingin") || query.includes("ice cube")) {
-      return "Rekomendasi Kopi Dingin:\n\n" +
-        "1. Americano Lemonade (Ice 20K): Espresso pekat dengan sirup lemon segar.\n" +
-        "2. Ice Cube (Ice 20K): Es batu espresso disiram susu segar dingin.\n" +
-        "3. Caffe Latte Ice (Arabika 25K / Robusta 24K): Espresso dingin dengan foam susu lembut.";
-    }
-
-    if (query.includes("moccacino") || query.includes("cokelat") || query.includes("manis")) {
-      return "Moccacino Latte (Hot 22K / Ice 22K):\n" +
-        "Perpaduan espresso premium dengan cokelat berkualitas dan susu segar untuk Anda yang menyukai rasa manis-gurih cokelat.";
-    }
-
-    if (query.includes("harga") || query.includes("menu") || query.includes("daftar")) {
-      return "Daftar Menu Espresso Based Maroone' Caffe:\n\n" +
-        "• Americano: Arabika (Hot 18K / Ice 19K) | Robusta (Hot 16K / Ice 17K)\n" +
-        "• Americano Lemonade: Ice 20K\n" +
-        "• Cappuccino: Arabika (Hot 23K / Ice 25K) | Robusta (Hot 22K / Ice 24K)\n" +
-        "• Magic: Arabika (Hot 23K)\n" +
-        "• Moccacino Latte: Hot 22K / Ice 22K\n" +
-        "• Caffe Latte: Arabika (Hot 23K / Ice 25K) | Robusta (Hot 22K / Ice 24K)\n" +
-        "• Ice Cube: Ice 20K";
-    }
-
-    if (query.includes("reservasi") || query.includes("booking") || query.includes("tempat")) {
-      return "Anda dapat melakukan simulasi reservasi tempat langsung pada halaman Reservasi atau menghubungi admin WhatsApp kami!";
-    }
-
-    return "Di Maroone' Caffe, kami menyajikan varian Espresso Based seperti Americano, Cappuccino, Magic, Moccacino Latte, Caffe Latte, Americano Lemonade, dan Ice Cube. Ada varian yang ingin Anda tanyakan?";
-  };
-
-  const handleSendMessage = (textToSend?: string) => {
+  const handleSendMessage = async (textToSend?: string) => {
     const messageText = textToSend || inputMessage;
     if (!messageText.trim()) return;
 
@@ -98,21 +54,68 @@ export default function AIChatbot() {
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
-    setMessages((prev) => [...prev, userMsg]);
+    const updatedMessages = [...messages, userMsg];
+    setMessages(updatedMessages);
     if (!textToSend) setInputMessage("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const responseText = generateBotResponse(messageText);
-      const botMsg: Message = {
+    try {
+      // Call server route /api/chat securely
+      const apiMessages = updatedMessages.map((m) => ({
+        role: m.sender === "user" ? "user" : "assistant",
+        content: m.text,
+      }));
+
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: apiMessages }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.reply) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: (Date.now() + 1).toString(),
+              sender: "bot",
+              text: data.reply,
+              timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+            },
+          ]);
+          setIsTyping(false);
+          return;
+        }
+      }
+    } catch (e) {
+      console.warn("Falling back to local knowledge base");
+    }
+
+    // Local fallback logic
+    let replyText = "Di Maroone' Caffe & Food F&B, kami menyajikan varian Espresso Based (Americano, Cappuccino, Magic, Moccacino Latte, Caffe Latte, Americano Lemonade, Ice Cube) berbahan Arabika & Robusta. Alamat kami di Jl. Kertajaya, Kepanjen, Jombang (WA: 0855-4654-6760).";
+    const q = messageText.toLowerCase();
+
+    if (q.includes("beda") || q.includes("arabika") || q.includes("robusta")) {
+      replyText = "Perbandingan Biji Kopi Maroone':\n• Arabika: Fruity, aroma floral manis, asam segar lembut, kafein sedang.\n• Robusta: Taste bold, nutty, full body, pahit mantap, kafein kuat.";
+    } else if (q.includes("magic")) {
+      replyText = "MAGIC Coffee (Arabika - Hot 23K):\nSajian khas Melbourne berbasis Double Ristretto Arabika dengan steamed milk lembut seimbang!";
+    } else if (q.includes("harga") || q.includes("menu")) {
+      replyText = "Daftar Menu Espresso Based:\n• Americano: Arabika (Hot 18K / Ice 19K) | Robusta (Hot 16K / Ice 17K)\n• Americano Lemonade: Ice 20K\n• Cappuccino: Arabika (Hot 23K / Ice 25K) | Robusta (Hot 22K / Ice 24K)\n• Magic: Arabika (Hot 23K)\n• Moccacino Latte: Hot 22K / Ice 22K\n• Caffe Latte: Arabika (Hot 23K / Ice 25K) | Robusta (Hot 22K / Ice 24K)\n• Ice Cube: Ice 20K";
+    } else if (q.includes("alamat") || q.includes("lokasi") || q.includes("jombang")) {
+      replyText = "Alamat Maroone' Caffe:\nJl. Kertajaya, Kepanjen, Kec. Jombang, Kabupaten Jombang, Jawa Timur 61411 (Telepon/WA: 0855-4654-6760).";
+    }
+
+    setMessages((prev) => [
+      ...prev,
+      {
         id: (Date.now() + 1).toString(),
         sender: "bot",
-        text: responseText,
+        text: replyText,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      };
-      setMessages((prev) => [...prev, botMsg]);
-      setIsTyping(false);
-    }, 500);
+      },
+    ]);
+    setIsTyping(false);
   };
 
   return (
@@ -126,7 +129,7 @@ export default function AIChatbot() {
         >
           <Bot className="h-5 w-5 text-white" />
           <span className="text-xs font-inter font-normal tracking-wider uppercase hidden sm:inline-block">
-            Asisten Menu
+            Asisten AI
           </span>
         </button>
       </div>
@@ -142,8 +145,8 @@ export default function AIChatbot() {
                 <Sparkles className="h-4 w-4 text-white" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="font-didot-italic text-lg text-white">Maroone Assistant</span>
-                <span className="text-[10px] font-inter text-white/70">Tanya Jawab Menu &amp; Kopi</span>
+                <span className="font-didot-italic text-lg text-white">Maroone AI Assistant</span>
+                <span className="text-[10px] font-inter text-white/70">Powered by GPT-4o</span>
               </div>
             </div>
 
@@ -153,7 +156,7 @@ export default function AIChatbot() {
                   {
                     id: "reset",
                     sender: "bot",
-                    text: "Percakapan direset. Ada yang ingin Anda tanyakan tentang menu Maroone' Caffe?",
+                    text: "Percakapan direset. Ada yang ingin Anda tanyakan tentang menu atau lokasi Maroone' Caffe?",
                     timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
                   }
                 ])}
