@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Coffee, ShoppingBag, Plus, Minus, Trash2, CheckCircle2, Sparkles } from "lucide-react";
+import { ShoppingBag, Plus, Minus, Trash2, CheckCircle2 } from "lucide-react";
 
 interface VariantOption {
-  type: string; // e.g. "Arabika", "Robusta", or standard
+  type: string;
   hotPrice?: number;
   icePrice?: number;
 }
@@ -21,7 +21,7 @@ interface CartItem {
   cartId: string;
   menuId: string;
   name: string;
-  beanType?: string; // "Arabika" or "Robusta"
+  beanType?: string;
   temp: "HOT" | "ICE";
   price: number;
   quantity: number;
@@ -31,6 +31,7 @@ export default function MenuSection() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [checkoutName, setCheckoutName] = useState("");
   const [isOrdered, setIsOrdered] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Exact Menu Items from espresso based.png
   const espressoMenuItems: MenuItem[] = [
@@ -98,7 +99,6 @@ export default function MenuSection() {
     },
   ];
 
-  // Add Item to Cart
   const addToCart = (item: MenuItem, variant: VariantOption, temp: "HOT" | "ICE", price: number) => {
     const beanLabel = variant.type !== "SIGNATURE" && variant.type !== "CLASSIC" ? variant.type : undefined;
     const cartId = `${item.id}-${variant.type}-${temp}`;
@@ -147,6 +147,10 @@ export default function MenuSection() {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   }, [cart]);
 
+  const totalItemsCount = useMemo(() => {
+    return cart.reduce((t, i) => t + i.quantity, 0);
+  }, [cart]);
+
   const formatPrice = (val: number) => {
     return (val / 1000) + "K";
   };
@@ -159,7 +163,7 @@ export default function MenuSection() {
     e.preventDefault();
     if (cart.length === 0 || !checkoutName.trim()) return;
 
-    let message = `Halo Maroone' Caffe & Food, saya ingin memesan menu takeaway atas nama *${checkoutName}*:\n\n`;
+    let message = `Halo Maroone' Caffe, saya ingin memesan menu takeaway atas nama *${checkoutName}*:\n\n`;
     cart.forEach((item) => {
       const beanStr = item.beanType ? ` (${item.beanType})` : "";
       message += `- *${item.name}${beanStr} [${item.temp}]* x ${item.quantity} = ${formatIDR(item.price * item.quantity)}\n`;
@@ -175,231 +179,233 @@ export default function MenuSection() {
       setIsOrdered(false);
       setCart([]);
       setCheckoutName("");
+      setIsCartOpen(false);
     }, 3000);
   };
 
   return (
     <section 
       id="menu" 
-      className="relative min-h-screen py-24 md:py-32 bg-[#3b040b] text-white overflow-hidden"
+      className="relative min-h-screen w-full bg-[#3b040b] text-white pt-24 pb-16 flex flex-col items-center justify-center overflow-x-hidden"
       aria-labelledby="menu-title"
     >
-      {/* === BACKGROUND IMAGE FOR MENU SECTION === */}
-      {/* Using /Asset/backround menu.png as instructed */}
-      <div className="absolute inset-0 z-0" aria-hidden="true">
-        <img
-          src="/Asset/backround menu.png"
-          alt="Maroone Menu Background"
-          className="h-full w-full object-cover object-center"
-        />
-        {/* Soft dark maroon gradient overlay for contrast & readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#3b040b]/90 via-[#5b0612]/85 to-[#3b040b]/95" />
-      </div>
-
-      {/* Main Container */}
-      <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-8">
+      {/* Container 1920x1080 canvas aspect ratio fit */}
+      <div className="relative w-full max-w-[1920px] mx-auto min-h-[90vh] md:aspect-[1920/1080] flex items-center justify-center p-4 sm:p-8">
         
-        {/* Header Title - Centered & Didot Italic */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="font-didot-italic text-lg md:text-xl font-bold tracking-widest text-white/80 uppercase block">
-            MAROONE&apos;
-          </span>
-          <h2 
-            id="menu-title" 
-            className="font-didot-italic text-4xl sm:text-6xl font-normal text-white tracking-widest mt-2 uppercase border-b-2 border-white/20 pb-4 inline-block"
-          >
-            ESPRESSO BASED
-          </h2>
-          <p className="text-xs sm:text-sm text-white/80 mt-4 tracking-wider uppercase font-light">
-            Sajian Kopi Autentik Berbahan Dasar Espresso Premium
-          </p>
+        {/* Background Image: backround menu.png in full glory - ZERO GRADIENT OVERLAY */}
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          <img
+            src="/Asset/backround menu.png"
+            alt="Maroone Menu Canvas Background"
+            className="h-full w-full object-cover object-center"
+          />
         </div>
 
-        {/* Menu & Cart Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        {/* Text Menu Overlay directly positioned on top of the 1920x1080 background */}
+        <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center py-10 px-4 md:px-12">
           
-          {/* Main Menu Column - Centered Text (Col-8) */}
-          <div className="lg:col-span-8 flex flex-col gap-8 bg-[#5b0612]/60 backdrop-blur-md p-6 sm:p-10 rounded-3xl border border-white/20 shadow-2xl">
-            
-            {/* Header Table Columns: HOT & ICE */}
-            <div className="hidden sm:grid grid-cols-12 gap-4 border-b border-white/20 pb-3 text-center font-didot-italic text-sm font-bold tracking-widest text-white/90">
-              <div className="col-span-6 text-center uppercase">VARIAN / MENU</div>
-              <div className="col-span-3 text-center uppercase">HOT</div>
-              <div className="col-span-3 text-center uppercase">ICE</div>
-            </div>
+          {/* Header Title: MAROONE' */}
+          <h2 
+            id="menu-title"
+            className="font-didot-italic text-4xl sm:text-6xl lg:text-7xl font-normal text-white tracking-widest uppercase mb-2"
+          >
+            MAROONE&apos;
+          </h2>
 
-            {/* Menu Items Loop - Strictly Centered */}
-            <div className="flex flex-col gap-8">
-              {espressoMenuItems.map((item) => (
-                <div key={item.id} className="flex flex-col items-center text-center border-b border-white/10 pb-6 last:border-0 last:pb-0">
-                  
-                  {/* Menu Name */}
-                  <h3 className="font-didot-italic text-2xl sm:text-3xl font-bold text-white tracking-wider uppercase">
-                    {item.name}
-                  </h3>
-
-                  {/* Optional Description */}
-                  {item.description && (
-                    <p className="text-[11px] text-white/70 tracking-widest mt-1 uppercase font-light max-w-md">
-                      {item.description}
-                    </p>
-                  )}
-
-                  {/* Variant list & prices */}
-                  <div className="w-full mt-4 flex flex-col gap-3">
-                    {item.variants.map((v, idx) => (
-                      <div 
-                        key={idx} 
-                        className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center text-center py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
-                      >
-                        {/* Variant label */}
-                        <div className="sm:col-span-6 text-center">
-                          <span className="font-sans text-xs font-bold text-white/90 tracking-widest uppercase">
-                            {v.type !== "SIGNATURE" && v.type !== "CLASSIC" ? v.type : item.name}
-                          </span>
-                        </div>
-
-                        {/* HOT Option */}
-                        <div className="sm:col-span-3 flex items-center justify-center gap-2">
-                          {v.hotPrice ? (
-                            <button
-                              onClick={() => addToCart(item, v, "HOT", v.hotPrice!)}
-                              className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white text-white hover:text-[#5b0612] transition-all text-xs font-bold font-mono tracking-wider flex items-center gap-1.5 border border-white/20 shadow-sm"
-                              title={`Tambah ${item.name} HOT ke keranjang`}
-                            >
-                              <span>HOT {formatPrice(v.hotPrice)}</span>
-                              <Plus className="h-3 w-3" />
-                            </button>
-                          ) : (
-                            <span className="text-xs text-white/30 font-mono">-</span>
-                          )}
-                        </div>
-
-                        {/* ICE Option */}
-                        <div className="sm:col-span-3 flex items-center justify-center gap-2">
-                          {v.icePrice ? (
-                            <button
-                              onClick={() => addToCart(item, v, "ICE", v.icePrice!)}
-                              className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white text-white hover:text-[#5b0612] transition-all text-xs font-bold font-mono tracking-wider flex items-center gap-1.5 border border-white/20 shadow-sm"
-                              title={`Tambah ${item.name} ICE ke keranjang`}
-                            >
-                              <span>ICE {formatPrice(v.icePrice)}</span>
-                              <Plus className="h-3 w-3" />
-                            </button>
-                          ) : (
-                            <span className="text-xs text-white/30 font-mono">-</span>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                </div>
-              ))}
-            </div>
-
+          {/* Category: ESPRESSO BASED */}
+          <div className="w-full max-w-lg border-t border-b border-white/40 py-2 my-4">
+            <h3 className="font-didot-italic text-lg sm:text-2xl font-normal text-white tracking-widest uppercase">
+              ESPRESSO BASED
+            </h3>
           </div>
 
-          {/* Interactive Order Sidebar (Col-4) */}
-          <div className="lg:col-span-4 sticky top-28">
-            <div className="bg-[#5b0612]/90 backdrop-blur-md rounded-3xl p-6 flex flex-col gap-6 border border-white/30 shadow-2xl text-center">
-              
-              <div className="flex items-center justify-center gap-2 border-b border-white/20 pb-4">
-                <ShoppingBag className="h-5 w-5 text-white" aria-hidden="true" />
-                <h3 className="font-didot-italic font-bold text-xl text-white tracking-wide">
-                  Simulasi Pesanan
-                </h3>
-              </div>
+          {/* Table Header: HOT | ICE */}
+          <div className="w-full max-w-2xl grid grid-cols-12 gap-2 text-center font-inter text-xs tracking-widest text-white/90 uppercase my-3 border-b border-white/20 pb-2 font-normal">
+            <div className="col-span-6 sm:col-span-7 text-left pl-2">MENU</div>
+            <div className="col-span-3 sm:col-span-2 text-center">HOT</div>
+            <div className="col-span-3 sm:col-span-3 text-center">ICE</div>
+          </div>
 
-              {/* Cart List */}
-              {cart.length === 0 ? (
-                <div className="py-10 text-center">
-                  <Coffee className="h-10 w-10 text-white/40 mx-auto mb-3" />
-                  <p className="text-xs text-white/80 uppercase tracking-wider font-medium">Keranjang Pesanan Kosong</p>
-                  <p className="text-[10px] text-white/60 mt-1">Pilih tombol HOT atau ICE di sebelah kiri untuk menambah menu.</p>
+          {/* Menu Items List */}
+          <div className="w-full max-w-2xl flex flex-col gap-5 text-center my-2">
+            {espressoMenuItems.map((item) => (
+              <div 
+                key={item.id}
+                className="flex flex-col items-start w-full border-b border-white/10 pb-4 last:border-0"
+              >
+                {/* Item Name */}
+                <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 text-left">
+                  <span className="font-didot-italic text-lg sm:text-2xl font-normal text-white tracking-wider uppercase">
+                    {item.name}
+                  </span>
+                  {item.description && (
+                    <span className="font-inter text-[10px] text-white/70 tracking-wider uppercase font-normal">
+                      {item.description}
+                    </span>
+                  )}
                 </div>
-              ) : (
-                <div className="flex flex-col gap-3 max-h-[280px] overflow-y-auto pr-1">
-                  {cart.map((ci) => (
-                    <div key={ci.cartId} className="flex items-center justify-between gap-2 p-3 rounded-xl bg-white/10 border border-white/15 text-left">
-                      <div className="flex flex-col">
-                        <span className="font-bold text-white text-xs tracking-wide">{ci.name}</span>
-                        <span className="text-[10px] text-white/70">
-                          {ci.beanType ? `${ci.beanType} • ` : ""}{ci.temp} ({formatIDR(ci.price)})
-                        </span>
+
+                {/* Variants & Prices */}
+                <div className="w-full flex flex-col gap-2 mt-2">
+                  {item.variants.map((v, idx) => (
+                    <div 
+                      key={idx}
+                      className="grid grid-cols-12 gap-2 items-center w-full py-1 text-xs font-inter font-normal"
+                    >
+                      {/* Bean type label */}
+                      <div className="col-span-6 sm:col-span-7 text-left pl-2 text-white/80 tracking-widest uppercase text-[11px]">
+                        {v.type !== "SIGNATURE" && v.type !== "CLASSIC" ? v.type : ""}
                       </div>
-                      
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <button
-                          onClick={() => updateQuantity(ci.cartId, -1)}
-                          className="p-1 rounded bg-white/10 hover:bg-white/20 text-white"
-                        >
-                          <Minus className="h-3 w-3" />
-                        </button>
-                        <span className="font-mono text-xs font-bold text-white min-w-[18px] text-center">
-                          {ci.quantity}
-                        </span>
-                        <button
-                          onClick={() => updateQuantity(ci.cartId, 1)}
-                          className="p-1 rounded bg-white/10 hover:bg-white/20 text-white"
-                        >
-                          <Plus className="h-3 w-3" />
-                        </button>
-                        <button
-                          onClick={() => removeFromCart(ci.cartId)}
-                          className="p-1 text-white/50 hover:text-white ml-1"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
+
+                      {/* Hot Price */}
+                      <div className="col-span-3 sm:col-span-2 text-center">
+                        {v.hotPrice ? (
+                          <button
+                            onClick={() => addToCart(item, v, "HOT", v.hotPrice!)}
+                            className="px-2.5 py-1 rounded bg-white/15 hover:bg-white text-white hover:text-[#5b0612] transition-all text-[11px] font-mono tracking-wider inline-flex items-center gap-1 border border-white/20"
+                            title={`Tambah ${item.name} HOT`}
+                          >
+                            <span>{formatPrice(v.hotPrice)}</span>
+                            <Plus className="h-3 w-3" />
+                          </button>
+                        ) : (
+                          <span className="text-white/30 font-mono text-[11px]">-</span>
+                        )}
+                      </div>
+
+                      {/* Ice Price */}
+                      <div className="col-span-3 sm:col-span-3 text-center">
+                        {v.icePrice ? (
+                          <button
+                            onClick={() => addToCart(item, v, "ICE", v.icePrice!)}
+                            className="px-2.5 py-1 rounded bg-white/15 hover:bg-white text-white hover:text-[#5b0612] transition-all text-[11px] font-mono tracking-wider inline-flex items-center gap-1 border border-white/20"
+                            title={`Tambah ${item.name} ICE`}
+                          >
+                            <span>{formatPrice(v.icePrice)}</span>
+                            <Plus className="h-3 w-3" />
+                          </button>
+                        ) : (
+                          <span className="text-white/30 font-mono text-[11px]">-</span>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
-              )}
 
-              {/* Total & Checkout */}
-              <div className="border-t border-white/20 pt-4 flex flex-col gap-4">
-                <div className="flex justify-between items-center px-2">
-                  <span className="text-xs font-semibold text-white/80 uppercase">Total Estimasi:</span>
-                  <span className="font-mono text-xl font-bold text-white">
-                    {formatIDR(cartTotal)}
-                  </span>
-                </div>
-
-                {cart.length > 0 && (
-                  <form onSubmit={handleWhatsAppSubmit} className="flex flex-col gap-3">
-                    <input
-                      type="text"
-                      placeholder="Masukkan nama Anda..."
-                      required
-                      value={checkoutName}
-                      onChange={(e) => setCheckoutName(e.target.value)}
-                      className="w-full px-4 py-2.5 text-xs rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:border-white text-center"
-                    />
-                    <button
-                      type="submit"
-                      disabled={isOrdered}
-                      className="w-full rounded-xl bg-white py-3 text-center text-xs font-bold tracking-wider text-[#5b0612] uppercase hover:bg-white/90 transition-all duration-200 shadow-lg flex items-center justify-center gap-2"
-                    >
-                      {isOrdered ? (
-                        <>
-                          <CheckCircle2 className="h-4 w-4" />
-                          <span>Mengarahkan ke WA...</span>
-                        </>
-                      ) : (
-                        <span>Pesan Takeaway via WA</span>
-                      )}
-                    </button>
-                  </form>
-                )}
               </div>
-
-            </div>
+            ))}
           </div>
 
         </div>
 
+        {/* Floating Cart Button */}
+        {totalItemsCount > 0 && (
+          <div className="fixed bottom-6 left-6 z-40">
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="flex items-center gap-3 rounded-full bg-white px-6 py-3 text-[#5b0612] shadow-2xl hover:bg-white/90 transition-all border border-white/40"
+            >
+              <ShoppingBag className="h-4 w-4" />
+              <span className="text-xs font-inter font-normal uppercase tracking-wider">
+                Keranjang ({totalItemsCount})
+              </span>
+              <span className="font-mono text-xs font-normal border-l border-[#5b0612]/20 pl-3">
+                {formatIDR(cartTotal)}
+              </span>
+            </button>
+          </div>
+        )}
+
       </div>
+
+      {/* Cart Drawer Modal */}
+      {isCartOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-[#5b0612] text-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-white/20 shadow-2xl flex flex-col gap-6 text-left">
+            <div className="flex items-center justify-between border-b border-white/20 pb-4">
+              <h3 className="font-didot-italic text-2xl font-normal text-white">Pesanan Anda</h3>
+              <button
+                onClick={() => setIsCartOpen(false)}
+                className="text-xs text-white/70 hover:text-white"
+              >
+                Tutup
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-3 max-h-[300px] overflow-y-auto pr-1">
+              {cart.map((ci) => (
+                <div key={ci.cartId} className="flex items-center justify-between p-3 rounded-xl bg-white/10 border border-white/15">
+                  <div className="flex flex-col text-left">
+                    <span className="font-didot-italic text-base text-white">{ci.name}</span>
+                    <span className="font-inter text-[11px] text-white/70">
+                      {ci.beanType ? `${ci.beanType} • ` : ""}{ci.temp} ({formatIDR(ci.price)})
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => updateQuantity(ci.cartId, -1)}
+                      className="p-1 rounded bg-white/10 hover:bg-white/20 text-white"
+                    >
+                      <Minus className="h-3 w-3" />
+                    </button>
+                    <span className="font-mono text-xs font-normal text-white min-w-[16px] text-center">
+                      {ci.quantity}
+                    </span>
+                    <button
+                      onClick={() => updateQuantity(ci.cartId, 1)}
+                      className="p-1 rounded bg-white/10 hover:bg-white/20 text-white"
+                    >
+                      <Plus className="h-3 w-3" />
+                    </button>
+                    <button
+                      onClick={() => removeFromCart(ci.cartId)}
+                      className="p-1 text-white/50 hover:text-white"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="border-t border-white/20 pt-4 flex flex-col gap-4">
+              <div className="flex justify-between items-center">
+                <span className="text-xs font-inter text-white/80 uppercase">Total:</span>
+                <span className="font-mono text-lg font-normal text-white">
+                  {formatIDR(cartTotal)}
+                </span>
+              </div>
+
+              <form onSubmit={handleWhatsAppSubmit} className="flex flex-col gap-3">
+                <input
+                  type="text"
+                  placeholder="Masukkan nama Anda..."
+                  required
+                  value={checkoutName}
+                  onChange={(e) => setCheckoutName(e.target.value)}
+                  className="w-full px-4 py-2.5 text-xs rounded-xl bg-white/10 border border-white/30 text-white placeholder-white/50 focus:outline-none focus:border-white text-center font-inter font-normal"
+                />
+                <button
+                  type="submit"
+                  disabled={isOrdered}
+                  className="w-full rounded-xl bg-white py-3 text-center text-xs font-inter tracking-wider text-[#5b0612] uppercase hover:bg-white/90 transition-all font-normal flex items-center justify-center gap-2"
+                >
+                  {isOrdered ? (
+                    <>
+                      <CheckCircle2 className="h-4 w-4" />
+                      <span>Mengarahkan ke WA...</span>
+                    </>
+                  ) : (
+                    <span>Kirim Pesanan via WhatsApp</span>
+                  )}
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      )}
     </section>
   );
 }

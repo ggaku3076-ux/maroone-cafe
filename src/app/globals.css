@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -9,8 +9,8 @@
   --brand-maroon: #5b0612;       /* Deep rich maroon */
   --brand-maroon-dark: #3b040b;  /* Dark chocolate maroon */
   --brand-maroon-light: #7d0919; /* Vibrant maroon highlight */
-  --brand-maroon-bg: #fdf8f6;    /* Subtle off-white cream background with maroon tint */
-  --brand-dark: #1f0307;        /* Very dark maroon text */
+  --brand-maroon-bg: #fdf8f6;    /* Off-white cream background */
+  --brand-dark: #1f0307;
   --brand-light: #ffffff;
 }
 
@@ -24,8 +24,8 @@
   --color-brand-dark: var(--brand-dark);
   --color-brand-light: var(--brand-light);
   
-  --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-didot: "Didot", "GF Didot", "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-didot: "Didot LP", "Didot", "Playfair Display", Georgia, serif;
   --font-mono: ui-monospace, SFMono-Regular, monospace;
 }
 
@@ -33,36 +33,40 @@ body {
   background-color: var(--brand-light);
   color: var(--brand-dark);
   font-family: var(--font-sans);
+  font-weight: 400;
 }
 
-/* Custom Didot Italic utility class */
+/* Custom Didot LP font utilities - strictly NO BOLD */
+.font-didot {
+  font-family: var(--font-didot);
+  font-weight: 400;
+}
+
 .font-didot-italic {
   font-family: var(--font-didot);
   font-style: italic;
+  font-weight: 400;
 }
 
-.font-didot {
-  font-family: var(--font-didot);
+.font-inter {
+  font-family: var(--font-sans);
+  font-weight: 400;
 }
 
 /* Custom scrollbar matching Maroon theme */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--brand-light);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--brand-maroon);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--brand-maroon-light);
+  border-radius: 3px;
 }
 
-/* Accessibility focus styles */
 *:focus-visible {
-  outline: 2px solid var(--brand-maroon-light);
+  outline: 1.5px solid var(--brand-maroon-light);
   outline-offset: 2px;
 }

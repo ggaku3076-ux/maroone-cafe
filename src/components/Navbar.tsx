@@ -26,10 +26,10 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Beranda", href: "/" },
-    { name: "Menu Espresso", href: "/menu" },
-    { name: "Reservasi Tempat", href: "/rsvp" },
-    { name: "Fasilitas & Suasana", href: "/wfc" },
-    { name: "Lokasi & Kontak", href: "/lokasi" },
+    { name: "Menu", href: "/menu" },
+    { name: "Reservasi", href: "/rsvp" },
+    { name: "Fasilitas", href: "/wfc" },
+    { name: "Lokasi", href: "/lokasi" },
   ];
 
   const isActive = (href: string) => {
@@ -39,31 +39,27 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="absolute top-0 left-0 w-full z-40 bg-transparent border-b-0">
-        <div className="mx-auto flex items-center justify-between max-w-7xl p-4 md:px-8">
+      {/* Fixed Header with solid Maroon background so text & logo are ALWAYS 100% visible on every page */}
+      <header className="fixed top-0 left-0 w-full z-50 bg-[#5b0612] text-white border-b border-white/15 shadow-lg">
+        <div className="mx-auto flex items-center justify-between max-w-7xl px-5 py-3.5 md:px-8">
           
           {/* Left: Logo & Brand Name */}
           <Link 
             href="/" 
-            className="flex items-center gap-3 transition-transform hover:scale-105"
-            aria-label="Maroone' Caffe & Food - Kembali ke Beranda"
+            className="flex items-center gap-3 transition-opacity hover:opacity-90"
+            aria-label="Maroone Caffe - Kembali ke Beranda"
           >
-            {/* Logo harus bulat dan bundar sempurna */}
-            <div className="relative h-14 w-14 shrink-0 rounded-full aspect-square overflow-hidden border-2 border-white/30 shadow-lg bg-[#5b0612] flex items-center justify-center">
+            {/* Logo bulat bundar */}
+            <div className="relative h-11 w-11 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#3b040b] flex items-center justify-center">
               <img
                 src="/Asset/LOGO.png"
-                alt="Maroone Caffe Logo"
+                alt="Maroone Logo"
                 className="h-full w-full object-cover rounded-full"
               />
             </div>
-            <div className="flex flex-col text-left">
-              <span className="font-didot-italic font-bold text-2xl tracking-wide text-white drop-shadow-md">
-                MAROONE&apos;
-              </span>
-              <span className="text-[10px] tracking-widest uppercase text-white/80 font-sans font-medium">
-                Caffe &amp; Food F&amp;B
-              </span>
-            </div>
+            <span className="font-didot-italic text-xl text-white tracking-wider">
+              MAROONE&apos;
+            </span>
           </Link>
 
           {/* Center: Desktop nav links */}
@@ -74,9 +70,9 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors duration-200 relative py-1 after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 ${
+                  className={`text-xs font-inter tracking-wider transition-colors duration-200 py-1 relative after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 ${
                     active 
-                      ? "text-white font-bold after:w-full" 
+                      ? "text-white font-medium after:w-full" 
                       : "text-white/80 hover:text-white after:w-0 hover:after:w-full"
                   }`}
                 >
@@ -90,7 +86,7 @@ export default function Navbar() {
           <div className="hidden md:flex justify-end">
             <Link
               href="/rsvp"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-[#5b0612] hover:bg-white/90 transition-all duration-300 shadow-md transform hover:scale-105"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2 text-xs font-inter text-[#5b0612] hover:bg-white/90 transition-all duration-300"
             >
               <span>Reservasi Meja</span>
               <ArrowRight className="h-3.5 w-3.5 text-[#5b0612]" aria-hidden="true" />
@@ -123,7 +119,7 @@ export default function Navbar() {
 
       {/* === MOBILE FULLSCREEN POPUP MENU === */}
       <div 
-        className={`fixed inset-0 bg-[#3b040b]/80 backdrop-blur-md z-[998] md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-[#1f0307]/80 backdrop-blur-md z-[998] md:hidden transition-opacity duration-300 ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsOpen(false)}
@@ -145,21 +141,20 @@ export default function Navbar() {
           }`}
         >
           {/* Logo inside popup */}
-          <div className="flex flex-col items-center gap-2 mb-2 text-center">
-            <div className="relative h-16 w-16 shrink-0 rounded-full aspect-square overflow-hidden border-2 border-white/40 shadow-lg">
+          <div className="flex flex-col items-center gap-2 text-center">
+            <div className="relative h-14 w-14 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#3b040b]">
               <img
                 src="/Asset/LOGO.png"
                 alt="Maroone Logo"
                 className="h-full w-full object-cover rounded-full"
               />
             </div>
-            <span className="font-didot-italic font-bold text-2xl text-white tracking-wide">
+            <span className="font-didot-italic text-2xl text-white tracking-wide">
               MAROONE&apos;
             </span>
-            <span className="text-[10px] tracking-widest text-white/70 uppercase">Caffe &amp; Food F&amp;B</span>
           </div>
 
-          <div className="w-16 h-0.5 bg-white/20 rounded-full" />
+          <div className="w-12 h-0.5 bg-white/20 rounded-full" />
 
           {/* Nav links */}
           {navLinks.map((link, i) => {
@@ -169,8 +164,8 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className={`text-base font-medium tracking-wide transition-all duration-200 py-1 ${
-                  active ? "text-white font-bold underline underline-offset-4" : "text-white/80 hover:text-white"
+                className={`text-sm font-inter tracking-wider transition-all duration-200 py-1 ${
+                  active ? "text-white font-medium underline underline-offset-4" : "text-white/80 hover:text-white"
                 }`}
                 style={{ transitionDelay: isOpen ? `${(i + 1) * 50}ms` : "0ms" }}
               >
@@ -179,24 +174,17 @@ export default function Navbar() {
             );
           })}
 
-          <div className="w-16 h-0.5 bg-white/20 rounded-full" />
+          <div className="w-12 h-0.5 bg-white/20 rounded-full" />
 
           {/* CTA Button */}
           <Link
             href="/rsvp"
             onClick={() => setIsOpen(false)}
-            className="inline-flex items-center justify-center gap-2 w-full rounded-2xl bg-white py-3 text-xs font-bold uppercase tracking-wider text-[#5b0612] hover:bg-white/90 transition-colors duration-200"
+            className="inline-flex items-center justify-center gap-2 w-full rounded-2xl bg-white py-3 text-xs font-inter text-[#5b0612] hover:bg-white/90 transition-colors duration-200"
           >
             <span>Reservasi Meja</span>
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
-
-          <button
-            onClick={() => setIsOpen(false)}
-            className="text-[11px] text-white/60 mt-1 hover:text-white transition-colors"
-          >
-            Tutup Navigation
-          </button>
         </div>
       </nav>
     </>
