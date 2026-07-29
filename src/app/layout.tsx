@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Playfair_Display, Inter } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -25,30 +25,38 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://maroone.web.id"),
-  title: "Maroone' Caffe & Food F&B | Kafe Espresso Based & Tempat Nongkrong Surabaya",
-  description: "Maroone' Caffe & Food F&B Surabaya menyajikan pilihan kopi Espresso Based terbaik (biji Arabika & Robusta), sajian kuliner istimewa, serta ruang kerja & acara yang hangat bernuansa Maroon. Kunjungi maroone.web.id.",
+  title: "Maroone' Caffe & Food F&B | Kafe Espresso Based & Tempat Nongkrong Jombang",
+  description: "Maroone' Caffe & Food F&B Jombang menyajikan pilihan kopi Espresso Based terbaik (biji Arabika & Robusta), sajian kuliner istimewa, serta ruang kerja & acara yang hangat bernuansa Maroon. Kunjungi maroone.web.id.",
   keywords: [
     "Maroone Caffe", 
     "Maroone Food F&B", 
-    "Maroone Surabaya", 
-    "Kafe Espresso Based Surabaya", 
-    "Coffee Shop Surabaya", 
-    "Kopi Arabika Robusta Surabaya", 
-    "Tempat Nongkrong Surabaya", 
-    "Kafe Aesthetic Surabaya",
-    "Reservasi Kafe Surabaya"
+    "Maroone Jombang", 
+    "Kafe Espresso Based Jombang", 
+    "Coffee Shop Jombang", 
+    "Kopi Arabika Robusta Jombang", 
+    "Tempat Nongkrong Jombang", 
+    "Kafe Aesthetic Jombang",
+    "Reservasi Kafe Jombang"
   ],
+  icons: {
+    icon: [
+      { url: "/icon.png?v=3", type: "image/png" },
+      { url: "/favicon.ico?v=3" }
+    ],
+    shortcut: "/icon.png?v=3",
+    apple: "/icon.png?v=3",
+  },
   authors: [{ name: "Maroone' Caffe Team" }],
   openGraph: {
-    title: "Maroone' Caffe & Food F&B | Kafe Espresso Based Surabaya",
-    description: "Nikmati sajian Espresso Based autentik (Arabika & Robusta) serta hidangan kuliner favorit di Maroone' Caffe & Food F&B Surabaya.",
+    title: "Maroone' Caffe & Food F&B | Kafe Espresso Based Jombang",
+    description: "Nikmati sajian Espresso Based autentik (Arabika & Robusta) serta hidangan kuliner favorit di Maroone' Caffe & Food F&B Jombang.",
     url: "https://maroone.web.id",
     siteName: "Maroone' Caffe & Food F&B",
     locale: "id_ID",
     type: "website",
     images: [
       {
-        url: "/Asset/LOGO.png",
+        url: "/icon.png?v=3",
         width: 800,
         height: 800,
         alt: "Maroone Caffe Logo",
@@ -71,13 +79,15 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "CafeOrCoffeeShop",
     "name": "Maroone' Caffe & Food F&B",
-    "image": "https://maroone.web.id/Asset/LOGO.png",
+    "image": "https://maroone.web.id/icon.png",
     "url": "https://maroone.web.id",
-    "telephone": "+6282231144930",
+    "telephone": "+6285546546760",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "Surabaya",
+      "streetAddress": "Jl. Kertajaya, Kepanjen, Kec. Jombang",
+      "addressLocality": "Jombang",
       "addressRegion": "Jawa Timur",
+      "postalCode": "61411",
       "addressCountry": "ID"
     },
     "servesCuisine": ["Coffee", "Espresso", "Indonesian F&B", "Western F&B"],
