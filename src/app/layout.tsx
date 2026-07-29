@@ -1,21 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
+import { Plus_Jakarta_Sans, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500"],
 });
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-didot",
   subsets: ["latin"],
   style: ["normal", "italic"],
-  weight: ["400", "600", "700", "800", "900"],
+  weight: ["400", "500"],
 });
 
 export const viewport: Viewport = {
@@ -25,23 +25,25 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://maroone.web.id"),
-  title: "Maroone' Caffe & Food | Premium F&B Experience",
-  description: "Nikmati pengalaman sajian kopi espresso based terbaik, pilihan biji Arabika & Robusta, serta kelezatan hidangan F&B dalam suasana Maroon yang elegan di Maroone' Caffe.",
+  title: "Maroone' Caffe & Food F&B | Kafe Espresso Based & Tempat Nongkrong Surabaya",
+  description: "Maroone' Caffe & Food F&B Surabaya menyajikan pilihan kopi Espresso Based terbaik (biji Arabika & Robusta), sajian kuliner istimewa, serta ruang kerja & acara yang hangat bernuansa Maroon. Kunjungi maroone.web.id.",
   keywords: [
     "Maroone Caffe", 
-    "Maroone Food", 
-    "Espresso Based Surabaya", 
-    "Arabika Robusta Surabaya", 
-    "Cafe Maroon", 
-    "Resto Surabaya", 
-    "Cafe Aesthetic"
+    "Maroone Food F&B", 
+    "Maroone Surabaya", 
+    "Kafe Espresso Based Surabaya", 
+    "Coffee Shop Surabaya", 
+    "Kopi Arabika Robusta Surabaya", 
+    "Tempat Nongkrong Surabaya", 
+    "Kafe Aesthetic Surabaya",
+    "Reservasi Kafe Surabaya"
   ],
   authors: [{ name: "Maroone' Caffe Team" }],
   openGraph: {
-    title: "Maroone' Caffe & Food | Premium F&B Experience",
-    description: "Sajian Espresso Based premium dan hidangan F&B berkualitas di Maroone' Caffe & Food.",
+    title: "Maroone' Caffe & Food F&B | Kafe Espresso Based Surabaya",
+    description: "Nikmati sajian Espresso Based autentik (Arabika & Robusta) serta hidangan kuliner favorit di Maroone' Caffe & Food F&B Surabaya.",
     url: "https://maroone.web.id",
-    siteName: "Maroone' Caffe & Food",
+    siteName: "Maroone' Caffe & Food F&B",
     locale: "id_ID",
     type: "website",
     images: [
@@ -49,7 +51,7 @@ export const metadata: Metadata = {
         url: "/Asset/LOGO.png",
         width: 800,
         height: 800,
-        alt: "Maroone' Caffe Logo",
+        alt: "Maroone Caffe Logo",
       }
     ],
   },
@@ -64,12 +66,37 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // JSON-LD Structured Data for Cafe / Restaurant SEO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Maroone' Caffe & Food F&B",
+    "image": "https://maroone.web.id/Asset/LOGO.png",
+    "url": "https://maroone.web.id",
+    "telephone": "+6282231144930",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Surabaya",
+      "addressRegion": "Jawa Timur",
+      "addressCountry": "ID"
+    },
+    "servesCuisine": ["Coffee", "Espresso", "Indonesian F&B", "Western F&B"],
+    "priceRange": "$$",
+    "openingHours": "Mo-Su 07:00-22:00"
+  };
+
   return (
     <html
       lang="id"
-      className={`${plusJakartaSans.variable} ${playfairDisplay.variable} h-full antialiased`}
+      className={`${inter.variable} ${playfairDisplay.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-brand-light text-brand-dark selection:bg-brand-maroon selection:text-white">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-[#3b040b] text-white selection:bg-[#5b0612] selection:text-white">
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />

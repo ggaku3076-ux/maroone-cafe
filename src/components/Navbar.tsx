@@ -39,9 +39,9 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Fixed Header with solid Maroon background so text & logo are ALWAYS 100% visible on every page */}
-      <header className="fixed top-0 left-0 w-full z-50 bg-[#5b0612] text-white border-b border-white/15 shadow-lg">
-        <div className="mx-auto flex items-center justify-between max-w-7xl px-5 py-3.5 md:px-8">
+      {/* Transparent Header as requested */}
+      <header className="absolute top-0 left-0 w-full z-50 bg-transparent text-white border-b-0">
+        <div className="mx-auto flex items-center justify-between max-w-7xl px-6 py-5 md:px-8">
           
           {/* Left: Logo & Brand Name */}
           <Link 
@@ -50,14 +50,14 @@ export default function Navbar() {
             aria-label="Maroone Caffe - Kembali ke Beranda"
           >
             {/* Logo bulat bundar */}
-            <div className="relative h-11 w-11 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#3b040b] flex items-center justify-center">
+            <div className="relative h-11 w-11 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#3b040b] flex items-center justify-center shadow-md">
               <img
                 src="/Asset/LOGO.png"
                 alt="Maroone Logo"
                 className="h-full w-full object-cover rounded-full"
               />
             </div>
-            <span className="font-didot-italic text-xl text-white tracking-wider">
+            <span className="font-didot-italic text-xl text-white tracking-wider drop-shadow-sm">
               MAROONE&apos;
             </span>
           </Link>
@@ -70,7 +70,7 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-xs font-inter tracking-wider transition-colors duration-200 py-1 relative after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 ${
+                  className={`text-xs font-inter tracking-wider transition-colors duration-200 py-1 relative drop-shadow-sm after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:bg-white after:transition-all after:duration-300 ${
                     active 
                       ? "text-white font-medium after:w-full" 
                       : "text-white/80 hover:text-white after:w-0 hover:after:w-full"
@@ -86,7 +86,7 @@ export default function Navbar() {
           <div className="hidden md:flex justify-end">
             <Link
               href="/rsvp"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2 text-xs font-inter text-[#5b0612] hover:bg-white/90 transition-all duration-300"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2 text-xs font-inter text-[#5b0612] hover:bg-white/90 transition-all duration-300 shadow-md"
             >
               <span>Reservasi Meja</span>
               <ArrowRight className="h-3.5 w-3.5 text-[#5b0612]" aria-hidden="true" />
@@ -96,7 +96,7 @@ export default function Navbar() {
           {/* Mobile: Hamburger toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center justify-center p-2 md:hidden text-white relative w-10 h-10"
+            className="flex items-center justify-center p-2 md:hidden text-white relative w-10 h-10 drop-shadow-sm"
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
             aria-label={isOpen ? "Tutup menu" : "Buka menu"}
@@ -119,7 +119,7 @@ export default function Navbar() {
 
       {/* === MOBILE FULLSCREEN POPUP MENU === */}
       <div 
-        className={`fixed inset-0 bg-[#1f0307]/80 backdrop-blur-md z-[998] md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-[#1f0307]/85 backdrop-blur-md z-[998] md:hidden transition-opacity duration-300 ${
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsOpen(false)}

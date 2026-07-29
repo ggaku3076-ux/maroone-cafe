@@ -48,20 +48,11 @@ export default function VenueSection() {
   return (
     <section 
       id="rsvp" 
-      className="relative min-h-screen py-32 bg-[#3b040b] text-white flex items-center justify-center overflow-hidden"
+      className="min-h-screen py-32 bg-[#3b040b] text-white flex items-center justify-center"
       aria-labelledby="venue-title"
     >
-      {/* Background Image: BACKGROUN SECTION 1 .png displayed clearly without heavy dark gradients */}
-      <div className="absolute inset-0 z-0" aria-hidden="true">
-        <img
-          src="/Asset/BACKGROUN SECTION 1 .png"
-          alt="Maroone Reservation Background"
-          className="h-full w-full object-cover object-center opacity-40"
-        />
-      </div>
-
-      {/* Centered Content Container */}
-      <div className="relative z-10 mx-auto max-w-3xl px-6 md:px-8 text-center flex flex-col items-center">
+      {/* Centered Content Container on Plain Maroon Background */}
+      <div className="mx-auto max-w-3xl px-6 md:px-8 text-center flex flex-col items-center">
         
         {/* Section Header */}
         <div className="max-w-2xl mx-auto mb-10 text-center">
@@ -82,7 +73,7 @@ export default function VenueSection() {
         </div>
 
         {/* Centered Reservation Card Form */}
-        <div className="w-full max-w-xl bg-[#5b0612]/90 backdrop-blur-xl p-8 sm:p-10 rounded-3xl border border-white/20 shadow-2xl">
+        <div className="w-full max-w-xl bg-[#5b0612] p-8 sm:p-10 rounded-3xl border border-white/20 shadow-2xl">
           <form onSubmit={handleRsvpSubmit} className="flex flex-col gap-5 text-center">
             
             <div className="flex items-center justify-center gap-2 border-b border-white/20 pb-4">
@@ -92,7 +83,7 @@ export default function VenueSection() {
               </h2>
             </div>
 
-            {/* Inputs - NO BOLD */}
+            {/* Inputs */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
               
               {/* Client Name */}
@@ -116,7 +107,7 @@ export default function VenueSection() {
                   id="rsvp-event-type"
                   value={eventType}
                   onChange={(e) => setEventType(e.target.value)}
-                  className="w-full px-4 py-2.5 text-xs rounded-xl bg-[#5b0612] border border-white/30 text-white focus:outline-none focus:border-white font-inter font-normal"
+                  className="w-full px-4 py-2.5 text-xs rounded-xl bg-[#3b040b] border border-white/30 text-white focus:outline-none focus:border-white font-inter font-normal"
                 >
                   <option value="meeting">Rapat Kerja / Business Gathering</option>
                   <option value="birthday">Perayaan Ulang Tahun</option>
@@ -145,7 +136,7 @@ export default function VenueSection() {
                   id="rsvp-session"
                   value={timeSession}
                   onChange={(e) => setTimeSession(e.target.value)}
-                  className="w-full px-4 py-2.5 text-xs rounded-xl bg-[#5b0612] border border-white/30 text-white focus:outline-none focus:border-white font-inter font-normal"
+                  className="w-full px-4 py-2.5 text-xs rounded-xl bg-[#3b040b] border border-white/30 text-white focus:outline-none focus:border-white font-inter font-normal"
                 >
                   <option value="morning">Pagi (08:00 - 12:00 WIB)</option>
                   <option value="afternoon">Siang (13:00 - 17:00 WIB)</option>

@@ -33,8 +33,8 @@ export default function MenuSection() {
   const [isOrdered, setIsOrdered] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Exact Menu Items from espresso based.png
-  const espressoMenuItems: MenuItem[] = [
+  // Exact Menu Items from espresso based.png grouped into 3 balanced columns
+  const col1Items: MenuItem[] = [
     {
       id: "e-1",
       name: "AMERICANO",
@@ -53,6 +53,9 @@ export default function MenuSection() {
         { type: "SIGNATURE", icePrice: 20000 },
       ],
     },
+  ];
+
+  const col2Items: MenuItem[] = [
     {
       id: "e-3",
       name: "CAPPUCCINO",
@@ -79,6 +82,9 @@ export default function MenuSection() {
         { type: "CLASSIC", hotPrice: 22000, icePrice: 22000 },
       ],
     },
+  ];
+
+  const col3Items: MenuItem[] = [
     {
       id: "e-6",
       name: "CAFFE LATTE",
@@ -183,122 +189,120 @@ export default function MenuSection() {
     }, 3000);
   };
 
+  const renderMenuItem = (item: MenuItem) => (
+    <div 
+      key={item.id}
+      className="flex flex-col items-start w-full border-b border-white/20 pb-4 last:border-0"
+    >
+      <div className="w-full flex flex-col items-start text-left">
+        <span className="font-didot-italic text-lg sm:text-xl font-normal text-white tracking-wider uppercase">
+          {item.name}
+        </span>
+        {item.description && (
+          <span className="font-inter text-[10px] text-white/75 tracking-wider uppercase font-normal mt-0.5">
+            {item.description}
+          </span>
+        )}
+      </div>
+
+      <div className="w-full flex flex-col gap-2 mt-2">
+        {item.variants.map((v, idx) => (
+          <div 
+            key={idx}
+            className="flex items-center justify-between w-full py-0.5 text-xs font-inter font-normal"
+          >
+            <span className="text-white/80 tracking-widest uppercase text-[11px]">
+              {v.type !== "SIGNATURE" && v.type !== "CLASSIC" ? v.type : ""}
+            </span>
+
+            <div className="flex items-center gap-2">
+              {v.hotPrice && (
+                <button
+                  onClick={() => addToCart(item, v, "HOT", v.hotPrice!)}
+                  className="px-2 py-0.5 rounded bg-white/20 hover:bg-white text-white hover:text-[#5b0612] transition-all text-[10px] font-mono inline-flex items-center gap-1 border border-white/30"
+                  title={`Tambah ${item.name} HOT`}
+                >
+                  <span>HOT {formatPrice(v.hotPrice)}</span>
+                  <Plus className="h-2.5 w-2.5" />
+                </button>
+              )}
+
+              {v.icePrice && (
+                <button
+                  onClick={() => addToCart(item, v, "ICE", v.icePrice!)}
+                  className="px-2 py-0.5 rounded bg-white/20 hover:bg-white text-white hover:text-[#5b0612] transition-all text-[10px] font-mono inline-flex items-center gap-1 border border-white/30"
+                  title={`Tambah ${item.name} ICE`}
+                >
+                  <span>ICE {formatPrice(v.icePrice)}</span>
+                  <Plus className="h-2.5 w-2.5" />
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <section 
       id="menu" 
-      className="relative min-h-screen w-full bg-[#3b040b] text-white pt-24 pb-16 flex flex-col items-center justify-center overflow-x-hidden"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden"
       aria-labelledby="menu-title"
     >
-      {/* Container 1920x1080 canvas aspect ratio fit */}
-      <div className="relative w-full max-w-[1920px] mx-auto min-h-[90vh] md:aspect-[1920/1080] flex items-center justify-center p-4 sm:p-8">
+      {/* 1920x1080 Canvas Container fitting screen aspect ratio without extra background color blocks */}
+      <div className="relative w-full max-w-[1920px] min-h-screen md:min-h-[1080px] aspect-[1920/1080] flex flex-col items-center justify-center p-6 md:p-12">
         
-        {/* Background Image: backround menu.png in full glory - ZERO GRADIENT OVERLAY */}
+        {/* Background Image: backround menu.png 1920x1080 - NO GRADIENT MASK */}
         <div className="absolute inset-0 z-0" aria-hidden="true">
           <img
             src="/Asset/backround menu.png"
-            alt="Maroone Menu Canvas Background"
+            alt="Maroone Menu Background 1920x1080"
             className="h-full w-full object-cover object-center"
           />
         </div>
 
-        {/* Text Menu Overlay directly positioned on top of the 1920x1080 background */}
-        <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center py-10 px-4 md:px-12">
+        {/* Header & 3-Column Parallel Horizontal Menu Grid directly overlaid on the 1920x1080 canvas */}
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center my-auto pt-16 pb-8">
           
-          {/* Header Title: MAROONE' */}
-          <h2 
+          {/* Main Title: MAROONE' */}
+          <h1 
             id="menu-title"
-            className="font-didot-italic text-4xl sm:text-6xl lg:text-7xl font-normal text-white tracking-widest uppercase mb-2"
+            className="font-didot-italic text-4xl sm:text-6xl font-normal text-white tracking-widest uppercase mb-1 drop-shadow"
           >
             MAROONE&apos;
-          </h2>
+          </h1>
 
-          {/* Category: ESPRESSO BASED */}
-          <div className="w-full max-w-lg border-t border-b border-white/40 py-2 my-4">
-            <h3 className="font-didot-italic text-lg sm:text-2xl font-normal text-white tracking-widest uppercase">
+          {/* Subtitle: ESPRESSO BASED */}
+          <div className="border-t border-b border-white/40 px-12 py-1.5 my-3">
+            <h2 className="font-didot-italic text-base sm:text-xl font-normal text-white tracking-widest uppercase">
               ESPRESSO BASED
-            </h3>
+            </h2>
           </div>
 
-          {/* Table Header: HOT | ICE */}
-          <div className="w-full max-w-2xl grid grid-cols-12 gap-2 text-center font-inter text-xs tracking-widest text-white/90 uppercase my-3 border-b border-white/20 pb-2 font-normal">
-            <div className="col-span-6 sm:col-span-7 text-left pl-2">MENU</div>
-            <div className="col-span-3 sm:col-span-2 text-center">HOT</div>
-            <div className="col-span-3 sm:col-span-3 text-center">ICE</div>
-          </div>
+          {/* 3 Parallel Horizontal Columns Layout to fit all items seamlessly without scroll errors */}
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 text-left mt-6 px-4">
+            
+            {/* Column 1 */}
+            <div className="flex flex-col gap-6">
+              {col1Items.map(renderMenuItem)}
+            </div>
 
-          {/* Menu Items List */}
-          <div className="w-full max-w-2xl flex flex-col gap-5 text-center my-2">
-            {espressoMenuItems.map((item) => (
-              <div 
-                key={item.id}
-                className="flex flex-col items-start w-full border-b border-white/10 pb-4 last:border-0"
-              >
-                {/* Item Name */}
-                <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 text-left">
-                  <span className="font-didot-italic text-lg sm:text-2xl font-normal text-white tracking-wider uppercase">
-                    {item.name}
-                  </span>
-                  {item.description && (
-                    <span className="font-inter text-[10px] text-white/70 tracking-wider uppercase font-normal">
-                      {item.description}
-                    </span>
-                  )}
-                </div>
+            {/* Column 2 */}
+            <div className="flex flex-col gap-6">
+              {col2Items.map(renderMenuItem)}
+            </div>
 
-                {/* Variants & Prices */}
-                <div className="w-full flex flex-col gap-2 mt-2">
-                  {item.variants.map((v, idx) => (
-                    <div 
-                      key={idx}
-                      className="grid grid-cols-12 gap-2 items-center w-full py-1 text-xs font-inter font-normal"
-                    >
-                      {/* Bean type label */}
-                      <div className="col-span-6 sm:col-span-7 text-left pl-2 text-white/80 tracking-widest uppercase text-[11px]">
-                        {v.type !== "SIGNATURE" && v.type !== "CLASSIC" ? v.type : ""}
-                      </div>
+            {/* Column 3 */}
+            <div className="flex flex-col gap-6">
+              {col3Items.map(renderMenuItem)}
+            </div>
 
-                      {/* Hot Price */}
-                      <div className="col-span-3 sm:col-span-2 text-center">
-                        {v.hotPrice ? (
-                          <button
-                            onClick={() => addToCart(item, v, "HOT", v.hotPrice!)}
-                            className="px-2.5 py-1 rounded bg-white/15 hover:bg-white text-white hover:text-[#5b0612] transition-all text-[11px] font-mono tracking-wider inline-flex items-center gap-1 border border-white/20"
-                            title={`Tambah ${item.name} HOT`}
-                          >
-                            <span>{formatPrice(v.hotPrice)}</span>
-                            <Plus className="h-3 w-3" />
-                          </button>
-                        ) : (
-                          <span className="text-white/30 font-mono text-[11px]">-</span>
-                        )}
-                      </div>
-
-                      {/* Ice Price */}
-                      <div className="col-span-3 sm:col-span-3 text-center">
-                        {v.icePrice ? (
-                          <button
-                            onClick={() => addToCart(item, v, "ICE", v.icePrice!)}
-                            className="px-2.5 py-1 rounded bg-white/15 hover:bg-white text-white hover:text-[#5b0612] transition-all text-[11px] font-mono tracking-wider inline-flex items-center gap-1 border border-white/20"
-                            title={`Tambah ${item.name} ICE`}
-                          >
-                            <span>{formatPrice(v.icePrice)}</span>
-                            <Plus className="h-3 w-3" />
-                          </button>
-                        ) : (
-                          <span className="text-white/30 font-mono text-[11px]">-</span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-              </div>
-            ))}
           </div>
 
         </div>
 
-        {/* Floating Cart Button */}
+        {/* Floating Cart Trigger Button */}
         {totalItemsCount > 0 && (
           <div className="fixed bottom-6 left-6 z-40">
             <button
@@ -307,7 +311,7 @@ export default function MenuSection() {
             >
               <ShoppingBag className="h-4 w-4" />
               <span className="text-xs font-inter font-normal uppercase tracking-wider">
-                Keranjang ({totalItemsCount})
+                Pesanan ({totalItemsCount})
               </span>
               <span className="font-mono text-xs font-normal border-l border-[#5b0612]/20 pl-3">
                 {formatIDR(cartTotal)}
@@ -326,7 +330,7 @@ export default function MenuSection() {
               <h3 className="font-didot-italic text-2xl font-normal text-white">Pesanan Anda</h3>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="text-xs text-white/70 hover:text-white"
+                className="text-xs font-inter text-white/70 hover:text-white"
               >
                 Tutup
               </button>
