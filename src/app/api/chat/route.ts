@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = process.env.OPENAI_API_KEY || "sk-KKiW0f5k12EYE1AGbnMcyw";
     const model = process.env.OPENAI_MODEL || "gpt-4o";
 
     if (!apiKey) {
@@ -32,7 +32,8 @@ Karakter Biji Kopi:
 Berikan jawaban yang ramah, ringkas, sopan, dan jelas dalam Bahasa Indonesia.`,
     };
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    // Calling Sumopod AI Endpoint (https://ai.sumopod.com/v1/chat/completions)
+    const response = await fetch("https://ai.sumopod.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,9 +49,9 @@ Berikan jawaban yang ramah, ringkas, sopan, dan jelas dalam Bahasa Indonesia.`,
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error("AI API Error:", errorData);
+      console.error("Sumopod AI API Error:", errorData);
       return NextResponse.json(
-        { error: "Gagal terhubung ke layanan AI AI Server" },
+        { error: "Gagal terhubung ke layanan AI Sumopod" },
         { status: response.status }
       );
     }
