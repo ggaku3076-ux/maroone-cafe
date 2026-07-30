@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
+import GSAPProvider from "@/components/GSAPProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -110,10 +111,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-[#3b040b] text-white selection:bg-[#5b0612] selection:text-white m-0 p-0">
-        <Navbar />
-        <main className="flex-grow bg-[#3b040b]">{children}</main>
-        <Footer />
-        <AIChatbot />
+        <GSAPProvider>
+          <Navbar />
+          <main className="flex-grow bg-[#3b040b]">{children}</main>
+          <Footer />
+          <AIChatbot />
+        </GSAPProvider>
       </body>
     </html>
   );
