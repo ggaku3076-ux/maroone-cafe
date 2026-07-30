@@ -35,7 +35,7 @@ export default function VenueSection() {
     message += `Mohon konfirmasi ketersediaan tempat & pilihan paket F&B. Terima kasih!`;
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/6282231144930?text=${encoded}`, "_blank");
+    window.open(`https://wa.me/628819636431?text=${encoded}`, "_blank");
 
     setIsSubmitted(true);
     setTimeout(() => {

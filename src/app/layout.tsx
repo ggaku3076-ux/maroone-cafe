@@ -81,7 +81,7 @@ export default function RootLayout({
     "name": "Maroone' Caffe & Food F&B",
     "image": "https://maroone.web.id/icon.png",
     "url": "https://maroone.web.id",
-    "telephone": "+6285546546760",
+    "telephone": "+628819636431",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Jl. Kertajaya, Kepanjen, Kec. Jombang",

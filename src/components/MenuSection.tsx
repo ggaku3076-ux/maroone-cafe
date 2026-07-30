@@ -180,7 +180,7 @@ export default function MenuSection() {
     message += `Mohon konfirmasi pesanan dan waktu penyiapan. Terima kasih!`;
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/6285546546760?text=${encoded}`, "_blank");
+    window.open(`https://wa.me/628819636431?text=${encoded}`, "_blank");
 
     setIsOrdered(true);
     setTimeout(() => {

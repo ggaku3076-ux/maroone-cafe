@@ -30,7 +30,7 @@ export default function AIChatbot() {
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const WA_NUMBER = "6285546546760"; // Formatted for wa.me (0855-4654-6760)
+  const WA_NUMBER = "628819636431"; // Formatted for wa.me (0881-9636-431)
 
   const quickQuestions = [
     "💬 Hubungi CS via WA",
@@ -144,14 +144,14 @@ export default function AIChatbot() {
     }
 
     // Local fallback logic
-    let replyText = "Di Maroone' Caffe & Food F&B, kami menyajikan varian Espresso Based (Americano, Cappuccino, Magic, Moccacino Latte, Caffe Latte, Americano Lemonade, Ice Cube) berbahan Arabika & Robusta. Alamat kami di Jl. Kertajaya, Kepanjen, Jombang (WA: 0855-4654-6760).";
+    let replyText = "Di Maroone' Caffe & Food F&B, kami menyajikan varian Espresso Based (Americano, Cappuccino, Magic, Moccacino Latte, Caffe Latte, Americano Lemonade, Ice Cube) berbahan Arabika & Robusta. Alamat kami di Jl. Kertajaya, Kepanjen, Jombang (WA: 0881-9636-431).";
     let waActionObj: WAAction | undefined = undefined;
 
     const q = messageText.toLowerCase();
 
     if (hasWAIntent) {
       const waUrl = createWAUrl(`Halo Maroone' Caffe, saya ingin menanyakan: "${messageText}"`);
-      replyText = "Tentu! Saya alihkan Anda ke WhatsApp Customer Service Maroone' Caffe (0855-4654-6760) untuk mendapatkan info lengkap dan pelayanan langsung.\n\n📲 *Membuka WhatsApp secara otomatis...*";
+      replyText = "Tentu! Saya alihkan Anda ke WhatsApp Customer Service Maroone' Caffe (0881-9636-431) untuk mendapatkan info lengkap dan pelayanan langsung.\n\n📲 *Membuka WhatsApp secara otomatis...*";
       waActionObj = {
         url: waUrl,
         buttonText: "Hubungi CS via WhatsApp",
@@ -169,7 +169,7 @@ export default function AIChatbot() {
     } else if (q.includes("harga") || q.includes("menu")) {
       replyText = "Daftar Menu Espresso Based:\n• Americano: Arabika (Hot 18K / Ice 19K) | Robusta (Hot 16K / Ice 17K)\n• Americano Lemonade: Ice 20K\n• Cappuccino: Arabika (Hot 23K / Ice 25K) | Robusta (Hot 22K / Ice 24K)\n• Magic: Arabika (Hot 23K)\n• Moccacino Latte: Hot 22K / Ice 22K\n• Caffe Latte: Arabika (Hot 23K / Ice 25K) | Robusta (Hot 22K / Ice 24K)\n• Ice Cube: Ice 20K";
     } else if (q.includes("alamat") || q.includes("lokasi") || q.includes("jombang")) {
-      replyText = "Alamat Maroone' Caffe:\nJl. Kertajaya, Kepanjen, Kec. Jombang, Kabupaten Jombang, Jawa Timur 61411 (Telepon/WA: 0855-4654-6760).";
+      replyText = "Alamat Maroone' Caffe:\nJl. Kertajaya, Kepanjen, Kec. Jombang, Kabupaten Jombang, Jawa Timur 61411 (Telepon/WA: 0881-9636-431).";
     }
 
     setMessages((prev) => [

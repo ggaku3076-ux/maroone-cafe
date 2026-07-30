@@ -53,8 +53,8 @@ export default function LokasiPage() {
                   <div>
                     <h3 className="font-normal text-[#1f0307] text-xs sm:text-sm font-didot-italic">Nomor Telepon <span className="font-inter font-normal">&amp;</span> WhatsApp</h3>
                     <p className="text-xs text-gray-600 mt-1">
-                      <a href="https://wa.me/6285546546760" target="_blank" rel="noopener noreferrer" className="hover:text-[#5b0612] transition-colors font-normal">
-                        0855-4654-6760
+                      <a href="https://wa.me/628819636431" target="_blank" rel="noopener noreferrer" className="hover:text-[#5b0612] transition-colors font-normal">
+                        0881-9636-431
                       </a>
                     </p>
                   </div>
@@ -131,7 +131,7 @@ export default function LokasiPage() {
               </a>
 
               <a
-                href="https://wa.me/6285546546760"
+                href="https://wa.me/628819636431"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 py-3 text-xs font-inter font-normal uppercase tracking-wider text-white hover:bg-white/20 transition-all duration-200"

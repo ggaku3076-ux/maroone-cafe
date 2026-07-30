@@ -44,7 +44,7 @@ export default function Footer() {
                 <Share2 className="h-4 w-4" />
               </a>
               <a
-                href="https://wa.me/6285546546760"
+                href="https://wa.me/628819636431"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-9 w-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-[#5b0612] transition-colors"
@@ -81,8 +81,8 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="h-4 w-4 text-white shrink-0" />
-                <a href="tel:+6285546546760" className="hover:text-white transition-colors">
-                  0855-4654-6760
+                <a href="tel:+628819636431" className="hover:text-white transition-colors">
+                  0881-9636-431
                 </a>
               </div>
               <div className="flex items-center gap-2.5">
