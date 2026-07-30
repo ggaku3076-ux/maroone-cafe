@@ -8,12 +8,13 @@ export default function Hero() {
       className="relative min-h-screen w-full flex items-center justify-start overflow-hidden bg-[#3b040b] pt-28 pb-16"
       aria-labelledby="hero-title"
     >
-      {/* Background Image: BACKGROUN SECTION 1 .png in full natural clarity without dark gradient overlays */}
+      {/* Background Image: Preloaded WebP for 0ms Instant Page Render */}
       <div className="absolute inset-0 z-0" aria-hidden="true">
         <img
-          src="/Asset/BACKGROUN SECTION 1 .png"
+          src="/Asset/hero_bg.webp"
           alt="Maroone Caffe Hero Image"
           className="h-full w-full object-cover object-center"
+          loading="eager"
         />
       </div>
 

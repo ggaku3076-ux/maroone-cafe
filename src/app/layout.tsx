@@ -75,7 +75,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // JSON-LD Structured Data for Cafe / Restaurant SEO
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CafeOrCoffeeShop",
@@ -105,6 +104,18 @@ export default function RootLayout({
         <link rel="icon" type="image/png" href="/icon.png?v=999" />
         <link rel="shortcut icon" href="/icon.png?v=999" />
         <link rel="apple-touch-icon" href="/icon.png?v=999" />
+
+        {/* Preload All Ultra-Fast WebP Assets for 0ms Instant Page Render */}
+        <link rel="preload" href="/Asset/hero_bg.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/menu_bg.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/menu/americano.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/menu/americano_lemonade.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/menu/cappuccino.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/menu/caffe_latte.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/menu/magic.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/menu/moccacino_latte.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/menu/ice_cube.webp" as="image" type="image/webp" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

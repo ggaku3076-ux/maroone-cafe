@@ -34,13 +34,13 @@ export default function MenuSection() {
   const [isOrdered, setIsOrdered] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Exact Menu Items from espresso based.png with transparent drink images
+  // Instant WebP Menu Assets for 0ms Instant Page Render
   const menuItems: MenuItem[] = [
     {
       id: "e-1",
       name: "AMERICANO",
       category: "espresso",
-      image: "/Asset/menu/americano.png",
+      image: "/Asset/menu/americano.webp",
       variants: [
         { type: "ARABIKA", hotPrice: 18000, icePrice: 19000 },
         { type: "ROBUSTA", hotPrice: 16000, icePrice: 17000 },
@@ -51,7 +51,7 @@ export default function MenuSection() {
       name: "AMERICANO LEMONADE",
       category: "espresso",
       description: "AMERICANO WITH LEMON SYRUP.",
-      image: "/Asset/menu/americano_lemonade.png",
+      image: "/Asset/menu/americano_lemonade.webp",
       variants: [
         { type: "SIGNATURE", icePrice: 20000 },
       ],
@@ -60,7 +60,7 @@ export default function MenuSection() {
       id: "e-3",
       name: "CAPPUCCINO",
       category: "espresso",
-      image: "/Asset/menu/cappuccino.png",
+      image: "/Asset/menu/cappuccino.webp",
       variants: [
         { type: "ARABIKA", hotPrice: 23000, icePrice: 25000 },
         { type: "ROBUSTA", hotPrice: 22000, icePrice: 24000 },
@@ -70,7 +70,7 @@ export default function MenuSection() {
       id: "e-4",
       name: "MAGIC",
       category: "espresso",
-      image: "/Asset/menu/magic.png",
+      image: "/Asset/menu/magic.webp",
       variants: [
         { type: "ARABIKA", hotPrice: 23000 },
       ],
@@ -80,7 +80,7 @@ export default function MenuSection() {
       name: "MOCCACINO LATTE",
       category: "espresso",
       description: "ESPRESSO WITH CHOCOLATTE",
-      image: "/Asset/menu/moccacino_latte.png",
+      image: "/Asset/menu/moccacino_latte.webp",
       variants: [
         { type: "CLASSIC", hotPrice: 22000, icePrice: 22000 },
       ],
@@ -89,7 +89,7 @@ export default function MenuSection() {
       id: "e-6",
       name: "CAFFE LATTE",
       category: "espresso",
-      image: "/Asset/menu/caffe_latte.png",
+      image: "/Asset/menu/caffe_latte.webp",
       variants: [
         { type: "ARABIKA", hotPrice: 23000, icePrice: 25000 },
         { type: "ROBUSTA", hotPrice: 22000, icePrice: 24000 },
@@ -100,7 +100,7 @@ export default function MenuSection() {
       name: "ICE CUBE",
       category: "espresso",
       description: "ESPRESSO WITH MILK",
-      image: "/Asset/menu/ice_cube.png",
+      image: "/Asset/menu/ice_cube.webp",
       variants: [
         { type: "SIGNATURE", icePrice: 20000 },
       ],
@@ -200,17 +200,17 @@ export default function MenuSection() {
       {/* 1920x1080 Canvas Container fitting screen aspect ratio without extra background color blocks */}
       <div className="relative w-full max-w-[1920px] mx-auto flex flex-col items-center justify-start p-4 sm:p-8">
         
-        {/* Background Image: backround menu.png 1920x1080 - ZERO GRADIENT OVERLAY */}
+        {/* Background Image: menu_bg.webp 1920x1080 - Preloaded for 0ms delay */}
         <div className="absolute inset-0 z-0" aria-hidden="true">
           <img
-            src="/Asset/backround menu.png"
+            src="/Asset/menu_bg.webp"
             alt="Maroone Menu Background 1920x1080"
             className="h-full w-full object-cover object-center"
             loading="eager"
           />
         </div>
 
-        {/* Content Area Overlaid on Canvas - Positioned UP on Desktop */}
+        {/* Content Area Overlaid on Canvas */}
         <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center pt-2 md:pt-4 pb-8">
           
           {/* Header Title: MAROONE' */}
@@ -228,7 +228,7 @@ export default function MenuSection() {
             </h2>
           </div>
 
-          {/* Menu Cards Grid - 3 Columns Desktop - Optimized lightweight GPU rendering */}
+          {/* Menu Cards Grid - 3 Columns Desktop - Instant WebP rendering */}
           <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-left mt-4 px-2 sm:px-4">
             {menuItems.map((item) => (
               <div 
@@ -248,13 +248,13 @@ export default function MenuSection() {
                     )}
                   </div>
 
-                  {/* Drink cutout image with transparent background */}
+                  {/* Drink cutout image in instant WebP format */}
                   <div className="relative h-20 w-20 shrink-0 flex items-center justify-center filter drop-shadow">
                     <img
                       src={item.image}
                       alt={item.name}
                       className="h-full w-full object-contain"
-                      loading="lazy"
+                      loading="eager"
                     />
                   </div>
                 </div>
