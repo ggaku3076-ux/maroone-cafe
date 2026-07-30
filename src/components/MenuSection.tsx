@@ -206,6 +206,7 @@ export default function MenuSection() {
             src="/Asset/backround menu.png"
             alt="Maroone Menu Background 1920x1080"
             className="h-full w-full object-cover object-center"
+            loading="eager"
           />
         </div>
 
@@ -227,12 +228,12 @@ export default function MenuSection() {
             </h2>
           </div>
 
-          {/* Menu Cards Grid - 3 Columns Desktop with Pure Transparent Glass Drink Cutout Images */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 text-left mt-4 px-2 sm:px-4">
+          {/* Menu Cards Grid - 3 Columns Desktop - Optimized lightweight GPU rendering */}
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-left mt-4 px-2 sm:px-4">
             {menuItems.map((item) => (
               <div 
                 key={item.id}
-                className="bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-xl transition-all hover:scale-[1.01] relative overflow-hidden"
+                className="gsap-card bg-[#5b0612]/80 border border-white/20 rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-md transition-transform duration-200 active:scale-[0.99] relative overflow-hidden"
               >
                 {/* Header with Title & Pure Transparent Glass Drink Cutout Image */}
                 <div className="flex items-start justify-between gap-3">
@@ -248,11 +249,12 @@ export default function MenuSection() {
                   </div>
 
                   {/* Drink cutout image with transparent background */}
-                  <div className="relative h-20 w-20 shrink-0 flex items-center justify-center filter drop-shadow-lg">
+                  <div className="relative h-20 w-20 shrink-0 flex items-center justify-center filter drop-shadow">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="h-full w-full object-contain hover:scale-105 transition-transform"
+                      className="h-full w-full object-contain"
+                      loading="lazy"
                     />
                   </div>
                 </div>
