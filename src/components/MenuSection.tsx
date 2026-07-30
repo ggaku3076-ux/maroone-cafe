@@ -14,6 +14,7 @@ interface MenuItem {
   name: string;
   category: "espresso";
   description?: string;
+  image: string;
   variants: VariantOption[];
 }
 
@@ -33,12 +34,13 @@ export default function MenuSection() {
   const [isOrdered, setIsOrdered] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Exact Menu Items from espresso based.png
+  // Exact Menu Items from espresso based.png with transparent drink images
   const menuItems: MenuItem[] = [
     {
       id: "e-1",
       name: "AMERICANO",
       category: "espresso",
+      image: "/Asset/menu/americano.png",
       variants: [
         { type: "ARABIKA", hotPrice: 18000, icePrice: 19000 },
         { type: "ROBUSTA", hotPrice: 16000, icePrice: 17000 },
@@ -49,6 +51,7 @@ export default function MenuSection() {
       name: "AMERICANO LEMONADE",
       category: "espresso",
       description: "AMERICANO WITH LEMON SYRUP.",
+      image: "/Asset/menu/americano_lemonade.png",
       variants: [
         { type: "SIGNATURE", icePrice: 20000 },
       ],
@@ -57,6 +60,7 @@ export default function MenuSection() {
       id: "e-3",
       name: "CAPPUCCINO",
       category: "espresso",
+      image: "/Asset/menu/cappuccino.png",
       variants: [
         { type: "ARABIKA", hotPrice: 23000, icePrice: 25000 },
         { type: "ROBUSTA", hotPrice: 22000, icePrice: 24000 },
@@ -66,6 +70,7 @@ export default function MenuSection() {
       id: "e-4",
       name: "MAGIC",
       category: "espresso",
+      image: "/Asset/menu/magic.png",
       variants: [
         { type: "ARABIKA", hotPrice: 23000 },
       ],
@@ -75,6 +80,7 @@ export default function MenuSection() {
       name: "MOCCACINO LATTE",
       category: "espresso",
       description: "ESPRESSO WITH CHOCOLATTE",
+      image: "/Asset/menu/moccacino_latte.png",
       variants: [
         { type: "CLASSIC", hotPrice: 22000, icePrice: 22000 },
       ],
@@ -83,6 +89,7 @@ export default function MenuSection() {
       id: "e-6",
       name: "CAFFE LATTE",
       category: "espresso",
+      image: "/Asset/menu/caffe_latte.png",
       variants: [
         { type: "ARABIKA", hotPrice: 23000, icePrice: 25000 },
         { type: "ROBUSTA", hotPrice: 22000, icePrice: 24000 },
@@ -93,6 +100,7 @@ export default function MenuSection() {
       name: "ICE CUBE",
       category: "espresso",
       description: "ESPRESSO WITH MILK",
+      image: "/Asset/menu/ice_cube.png",
       variants: [
         { type: "SIGNATURE", icePrice: 20000 },
       ],
@@ -172,7 +180,7 @@ export default function MenuSection() {
     message += `Mohon konfirmasi pesanan dan waktu penyiapan. Terima kasih!`;
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/6285546546760`, "_blank");
+    window.open(`https://wa.me/6285546546760?text=${encoded}`, "_blank");
 
     setIsOrdered(true);
     setTimeout(() => {
@@ -186,7 +194,7 @@ export default function MenuSection() {
   return (
     <section 
       id="menu" 
-      className="relative min-h-screen w-full flex flex-col items-center justify-start overflow-x-hidden pt-16 md:pt-20 pb-16"
+      className="relative min-h-screen w-full bg-[#3b040b] text-white flex flex-col items-center justify-start overflow-x-hidden pt-20 pb-12 m-0 p-0"
       aria-labelledby="menu-title"
     >
       {/* 1920x1080 Canvas Container fitting screen aspect ratio without extra background color blocks */}
@@ -202,7 +210,7 @@ export default function MenuSection() {
         </div>
 
         {/* Content Area Overlaid on Canvas - Positioned UP on Desktop */}
-        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center pt-4 md:pt-6 pb-12">
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center text-center pt-2 md:pt-4 pb-8">
           
           {/* Header Title: MAROONE' */}
           <h1 
@@ -219,31 +227,42 @@ export default function MenuSection() {
             </h2>
           </div>
 
-          {/* Menu Cards Grid - 3 Columns Desktop, 1 Column Mobile with Large Touch Buttons */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-left mt-4 px-2 sm:px-4">
+          {/* Menu Cards Grid - 3 Columns Desktop with Pure Transparent Glass Drink Cutout Images */}
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 text-left mt-4 px-2 sm:px-4">
             {menuItems.map((item) => (
               <div 
                 key={item.id}
-                className="bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-xl transition-all hover:scale-[1.01]"
+                className="bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-xl transition-all hover:scale-[1.01] relative overflow-hidden"
               >
-                {/* Menu Header */}
-                <div className="flex flex-col text-left">
-                  <h3 className="font-didot-italic text-xl sm:text-2xl font-normal text-white tracking-wider uppercase">
-                    {item.name}
-                  </h3>
-                  {item.description && (
-                    <p className="font-inter text-[11px] text-white/80 tracking-wide uppercase font-normal mt-1 leading-snug">
-                      {item.description}
-                    </p>
-                  )}
+                {/* Header with Title & Pure Transparent Glass Drink Cutout Image */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex flex-col text-left max-w-[65%]">
+                    <h3 className="font-didot-italic text-xl sm:text-2xl font-normal text-white tracking-wider uppercase leading-tight">
+                      {item.name}
+                    </h3>
+                    {item.description && (
+                      <p className="font-inter text-[11px] text-white/80 tracking-wide uppercase font-normal mt-1 leading-snug">
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Drink cutout image with transparent background */}
+                  <div className="relative h-20 w-20 shrink-0 flex items-center justify-center filter drop-shadow-lg">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-contain hover:scale-105 transition-transform"
+                    />
+                  </div>
                 </div>
 
                 {/* Card Variants & Large Easy-Touch Buttons */}
-                <div className="flex flex-col gap-3 pt-2 border-t border-white/15">
+                <div className="flex flex-col gap-2.5 pt-2 border-t border-white/15">
                   {item.variants.map((v, idx) => (
                     <div 
                       key={idx}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 bg-white/5 p-3 rounded-xl border border-white/10"
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-white/5 p-2.5 rounded-xl border border-white/10"
                     >
                       {/* Bean Type Label */}
                       <span className="font-inter text-xs text-white/90 tracking-widest uppercase font-normal">
@@ -255,7 +274,7 @@ export default function MenuSection() {
                         {v.hotPrice && (
                           <button
                             onClick={() => addToCart(item, v, "HOT", v.hotPrice!)}
-                            className="flex-1 sm:flex-initial py-2.5 px-4 rounded-xl bg-white text-[#5b0612] hover:bg-white/90 transition-all text-xs font-mono font-normal inline-flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+                            className="flex-1 sm:flex-initial py-2.5 px-3.5 rounded-xl bg-white text-[#5b0612] hover:bg-white/90 transition-all text-xs font-mono font-normal inline-flex items-center justify-center gap-1.5 shadow-md active:scale-95"
                             title={`Tambah ${item.name} HOT`}
                           >
                             <span>HOT {formatPrice(v.hotPrice)}</span>
@@ -266,7 +285,7 @@ export default function MenuSection() {
                         {v.icePrice && (
                           <button
                             onClick={() => addToCart(item, v, "ICE", v.icePrice!)}
-                            className="flex-1 sm:flex-initial py-2.5 px-4 rounded-xl bg-white text-[#5b0612] hover:bg-white/90 transition-all text-xs font-mono font-normal inline-flex items-center justify-center gap-1.5 shadow-md active:scale-95"
+                            className="flex-1 sm:flex-initial py-2.5 px-3.5 rounded-xl bg-white text-[#5b0612] hover:bg-white/90 transition-all text-xs font-mono font-normal inline-flex items-center justify-center gap-1.5 shadow-md active:scale-95"
                             title={`Tambah ${item.name} ICE`}
                           >
                             <span>ICE {formatPrice(v.icePrice)}</span>
