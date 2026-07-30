@@ -1,13 +1,19 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Bot, Sparkles, User, RefreshCw } from "lucide-react";
+import { X, Send, Bot, Sparkles, User, RefreshCw, MessageCircle, ExternalLink } from "lucide-react";
+
+interface WAAction {
+  url: string;
+  buttonText: string;
+}
 
 interface Message {
   id: string;
   sender: "bot" | "user";
   text: string;
   timestamp: string;
+  waAction?: WAAction;
 }
 
 export default function AIChatbot() {
@@ -24,8 +30,10 @@ export default function AIChatbot() {
   ]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const WA_NUMBER = "6285546546760"; // Formatted for wa.me (0855-4654-6760)
 
   const quickQuestions = [
+    "💬 Hubungi CS via WA",
     "Apa beda Arabika & Robusta?",
     "Rekomendasi kopi segar?",
     "Apa itu Magic Coffee?",
@@ -43,6 +51,28 @@ export default function AIChatbot() {
     }
   }, [messages, isOpen, isTyping]);
 
+  // Helper to check WhatsApp intent
+  const isWhatsAppIntent = (text: string): boolean => {
+    const q = text.toLowerCase();
+    return (
+      q.includes("info lengkap") ||
+      q.includes("wa") ||
+      q.includes("whatsapp") ||
+      q.includes("cs") ||
+      q.includes("customer service") ||
+      q.includes("hubungi") ||
+      q.includes("kontak") ||
+      q.includes("reservasi via wa") ||
+      q.includes("tanya cs")
+    );
+  };
+
+  // Helper to construct wa.me URL with pre-filled message
+  const createWAUrl = (customText?: string): string => {
+    const defaultText = customText || "Halo Maroone' Caffe, saya butuh informasi lengkap dari website.";
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(defaultText)}`;
+  };
+
   const handleSendMessage = async (textToSend?: string) => {
     const messageText = textToSend || inputMessage;
     if (!messageText.trim()) return;
@@ -58,6 +88,8 @@ export default function AIChatbot() {
     setMessages(updatedMessages);
     if (!textToSend) setInputMessage("");
     setIsTyping(true);
+
+    const hasWAIntent = isWhatsAppIntent(messageText);
 
     try {
       // Call server route /api/chat securely
@@ -75,13 +107,32 @@ export default function AIChatbot() {
       if (res.ok) {
         const data = await res.json();
         if (data.reply) {
+          let botReplyText = data.reply;
+          let waActionObj: WAAction | undefined = undefined;
+
+          if (hasWAIntent || isWhatsAppIntent(botReplyText)) {
+            const waUrl = createWAUrl(`Halo Maroone' Caffe, saya ingin menanyakan: "${messageText}"`);
+            waActionObj = {
+              url: waUrl,
+              buttonText: "Hubungi CS via WhatsApp",
+            };
+
+            botReplyText = `${botReplyText}\n\n📲 *Mengalihkan Anda ke WhatsApp Customer Service Maroone' Caffe dalam 2 detik...*`;
+
+            // Cara 1: Automated Action - Auto Open WhatsApp Tab in 1.5s
+            setTimeout(() => {
+              window.open(waUrl, "_blank");
+            }, 1500);
+          }
+
           setMessages((prev) => [
             ...prev,
             {
               id: (Date.now() + 1).toString(),
               sender: "bot",
-              text: data.reply,
+              text: botReplyText,
               timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+              waAction: waActionObj,
             },
           ]);
           setIsTyping(false);
@@ -94,9 +145,24 @@ export default function AIChatbot() {
 
     // Local fallback logic
     let replyText = "Di Maroone' Caffe & Food F&B, kami menyajikan varian Espresso Based (Americano, Cappuccino, Magic, Moccacino Latte, Caffe Latte, Americano Lemonade, Ice Cube) berbahan Arabika & Robusta. Alamat kami di Jl. Kertajaya, Kepanjen, Jombang (WA: 0855-4654-6760).";
+    let waActionObj: WAAction | undefined = undefined;
+
     const q = messageText.toLowerCase();
 
-    if (q.includes("beda") || q.includes("arabika") || q.includes("robusta")) {
+    if (hasWAIntent) {
+      const waUrl = createWAUrl(`Halo Maroone' Caffe, saya ingin menanyakan: "${messageText}"`);
+      replyText = "Tentu! Saya alihkan Anda ke WhatsApp Customer Service Maroone' Caffe (0855-4654-6760) untuk mendapatkan info lengkap dan pelayanan langsung.\n\n📲 *Membuka WhatsApp secara otomatis...*";
+      waActionObj = {
+        url: waUrl,
+        buttonText: "Hubungi CS via WhatsApp",
+      };
+
+      // Cara 1: Auto Redirect
+      setTimeout(() => {
+        window.open(waUrl, "_blank");
+      }, 1500);
+
+    } else if (q.includes("beda") || q.includes("arabika") || q.includes("robusta")) {
       replyText = "Perbandingan Biji Kopi Maroone':\n• Arabika: Fruity, aroma floral manis, asam segar lembut, kafein sedang.\n• Robusta: Taste bold, nutty, full body, pahit mantap, kafein kuat.";
     } else if (q.includes("magic")) {
       replyText = "MAGIC Coffee (Arabika - Hot 23K):\nSajian khas Melbourne berbasis Double Ristretto Arabika dengan steamed milk lembut seimbang!";
@@ -113,6 +179,7 @@ export default function AIChatbot() {
         sender: "bot",
         text: replyText,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        waAction: waActionObj,
       },
     ]);
     setIsTyping(false);
@@ -146,7 +213,7 @@ export default function AIChatbot() {
               </div>
               <div className="flex flex-col text-left">
                 <span className="font-didot-italic text-lg text-white">Maroone AI Assistant</span>
-                <span className="text-[10px] font-inter text-white/70">Powered by GPT-4o</span>
+                <span className="text-[10px] font-inter text-white/70">Powered by GPT-4o &amp; WA CS</span>
               </div>
             </div>
 
@@ -161,12 +228,14 @@ export default function AIChatbot() {
                   }
                 ])}
                 className="p-1 rounded text-white/80 hover:text-white"
+                title="Reset Chat"
               >
                 <RefreshCw className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 rounded text-white/80 hover:text-white"
+                title="Tutup Chat"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -187,15 +256,32 @@ export default function AIChatbot() {
                 )}
                 
                 <div
-                  className={`max-w-[82%] rounded-2xl px-4 py-2.5 text-xs font-inter font-normal leading-relaxed ${
+                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-xs font-inter font-normal leading-relaxed ${
                     msg.sender === "user"
                       ? "bg-[#5b0612] text-white rounded-br-none"
-                      : "bg-white text-[#1f0307] border border-[#5b0612]/10 rounded-bl-none shadow-sm"
+                      : "bg-white text-[#1f0307] border border-[#5b0612]/10 rounded-bl-none shadow-sm flex flex-col gap-2.5"
                   }`}
                 >
                   <p className="whitespace-pre-line">{msg.text}</p>
+
+                  {/* Cara 2: Interactive Card / WhatsApp Action Button inside Chat Bubble */}
+                  {msg.waAction && (
+                    <div className="pt-1">
+                      <a
+                        href={msg.waAction.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 w-full justify-center rounded-xl bg-[#25D366] px-4 py-2.5 text-xs font-medium text-white shadow-md hover:bg-[#20bd5a] transition-all duration-200 border border-green-600/30"
+                      >
+                        <MessageCircle className="h-4 w-4 fill-white" />
+                        <span>{msg.waAction.buttonText}</span>
+                        <ExternalLink className="h-3 w-3 opacity-80" />
+                      </a>
+                    </div>
+                  )}
+
                   <span
-                    className={`block text-[9px] mt-1 text-right ${
+                    className={`block text-[9px] text-right ${
                       msg.sender === "user" ? "text-white/60" : "text-gray-400"
                     }`}
                   >
