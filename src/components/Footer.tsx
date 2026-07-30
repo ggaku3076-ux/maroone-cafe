@@ -11,8 +11,8 @@ export default function Footer() {
           
           {/* Brand Info (Col-5) */}
           <div className="md:col-span-5 flex flex-col gap-4 items-start text-left">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative h-12 w-12 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#5b0612] flex items-center justify-center">
+            <Link href="/" className="flex items-center gap-3.5">
+              <div className="relative h-14 w-14 sm:h-16 sm:w-16 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#5b0612] flex items-center justify-center">
                 <img
                   src="/icon.png"
                   alt="Maroone Logo"
@@ -20,7 +20,7 @@ export default function Footer() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-didot-italic text-2xl text-white tracking-wide">
+                <span className="font-didot-italic text-2xl sm:text-3xl text-white tracking-wide">
                   MAROONE&apos;
                 </span>
                 <span className="text-[10px] font-inter tracking-widest text-white/70 uppercase">

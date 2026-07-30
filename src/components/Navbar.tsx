@@ -47,21 +47,21 @@ export default function Navbar() {
       <header className="absolute top-0 left-0 w-full z-50 bg-transparent border-b-0">
         <div className="mx-auto flex items-center justify-between max-w-7xl px-6 py-5 md:px-8">
           
-          {/* Left: Logo & Brand Name */}
+          {/* Left: Logo & Brand Name - Enlarged Logo */}
           <Link 
             href="/" 
-            className="flex items-center gap-3 transition-opacity hover:opacity-90"
+            className="flex items-center gap-3.5 transition-opacity hover:opacity-90"
             aria-label="Maroone Caffe - Kembali ke Beranda"
           >
-            {/* Logo bulat bundar */}
-            <div className="relative h-11 w-11 shrink-0 rounded-full aspect-square overflow-hidden border border-[#5b0612]/30 bg-[#3b040b] flex items-center justify-center shadow-md">
+            {/* Logo perbesar */}
+            <div className="relative h-14 w-14 sm:h-16 sm:w-16 shrink-0 rounded-full aspect-square overflow-hidden border border-[#5b0612]/30 bg-[#3b040b] flex items-center justify-center shadow-lg">
               <img
                 src="/icon.png"
                 alt="Maroone Logo"
                 className="h-full w-full object-cover rounded-full"
               />
             </div>
-            <span className={`font-didot-italic text-xl ${textColor} tracking-wider drop-shadow-sm`}>
+            <span className={`font-didot-italic text-2xl sm:text-3xl ${textColor} tracking-wider drop-shadow-sm`}>
               MAROONE&apos;
             </span>
           </Link>
@@ -90,7 +90,7 @@ export default function Navbar() {
           <div className="hidden md:flex justify-end">
             <Link
               href="/rsvp"
-              className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-xs font-inter transition-all duration-300 shadow-md ${
+              className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-inter transition-all duration-300 shadow-md ${
                 isLightPage
                   ? "bg-[#5b0612] text-white hover:bg-[#7d0919]"
                   : "bg-white text-[#5b0612] hover:bg-white/90"
@@ -150,14 +150,14 @@ export default function Navbar() {
         >
           {/* Logo inside popup */}
           <div className="flex flex-col items-center gap-2 text-center">
-            <div className="relative h-14 w-14 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#3b040b]">
+            <div className="relative h-16 w-16 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#3b040b]">
               <img
                 src="/icon.png"
                 alt="Maroone Logo"
                 className="h-full w-full object-cover rounded-full"
               />
             </div>
-            <span className="font-didot-italic text-2xl text-white tracking-wide">
+            <span className="font-didot-italic text-3xl text-white tracking-wide">
               MAROONE&apos;
             </span>
           </div>
