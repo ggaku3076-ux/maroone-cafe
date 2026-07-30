@@ -9,28 +9,32 @@ export default function Home() {
       src: "/Asset/gallery/gallery1.webp",
       alt: "Suasana & Moment Maroone Caffe 1",
       title: "Suasana Khas Maroone'",
-      subtitle: "Kehangatan Interior & Pencahayaan"
+      subtitle: "Kehangatan Interior & Lampu Temaram",
+      offsetClass: "lg:translate-y-0"
     },
     {
       id: "photo-2",
       src: "/Asset/gallery/gallery2.webp",
       alt: "Suasana & Moment Maroone Caffe 2",
       title: "Sudut Favorit Bersantai",
-      subtitle: "Kenyamanan Ruang Bicara"
+      subtitle: "Kenyamanan Bicara & Cita Rasa",
+      offsetClass: "lg:translate-y-8"
     },
     {
       id: "photo-3",
       src: "/Asset/gallery/gallery3.webp",
       alt: "Suasana & Moment Maroone Caffe 3",
-      title: "Momen Spesial Pengunjung",
-      subtitle: "Kebersamaan Penuh Kehangatan"
+      title: "Momen Kebersamaan",
+      subtitle: "Kehangatan Komunitas & Pengunjung",
+      offsetClass: "lg:-translate-y-4"
     },
     {
       id: "photo-4",
       src: "/Asset/gallery/gallery4.webp",
       alt: "Suasana & Moment Maroone Caffe 4",
-      title: "Estetika Ruang & Kopi",
-      subtitle: "Kombinasi Seni & Cita Rasa"
+      title: "Estetika Ruang Kopi",
+      subtitle: "Ruang Inspirasi & Ketenangan",
+      offsetClass: "lg:translate-y-6"
     },
   ];
 
@@ -107,15 +111,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2.5 Photo Gallery Slide Section (SLIDE TENGAH TENGAH) */}
+      {/* 2.5 Photo Gallery Slide Section (SLIDE TENGAH TENGAH - MIX / ABSTRAK ASYMMETRICAL LAYOUT) */}
       <section 
         id="galeri-suasana"
-        className="py-20 md:py-28 bg-[#1f0307] text-white border-t border-b border-white/10"
+        className="py-24 md:py-36 bg-[#1f0307] text-white border-t border-b border-white/10 overflow-hidden"
         aria-labelledby="gallery-title"
       >
-        <div className="mx-auto max-w-7xl px-6 md:px-12 text-center">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-12 text-center">
           
-          <div className="max-w-2xl mx-auto mb-12 flex flex-col items-center gap-3">
+          <div className="max-w-2xl mx-auto mb-16 flex flex-col items-center gap-3">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-inter tracking-widest text-white uppercase">
               <Camera className="h-3.5 w-3.5" />
               <span>GALERI MOMEN &amp; SUASANA</span>
@@ -133,30 +137,31 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Photo Cards Grid - Sized cleanly to match 3:4 natural photo aspect ratios */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+          {/* Photo Cards Grid - Seamless Abstract Asymmetrical Staggered Layout (No empty gaps) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left items-start pb-8">
             {galleryPhotos.map((photo) => (
               <div
                 key={photo.id}
-                className="gsap-card group relative bg-[#5b0612]/60 rounded-3xl overflow-hidden border border-white/20 shadow-xl transition-all duration-300 hover:border-white/50 hover:shadow-2xl flex flex-col justify-between"
+                className={`gsap-card group relative bg-[#3b040b] rounded-2xl overflow-hidden border border-white/20 shadow-2xl transition-all duration-500 hover:scale-[1.03] hover:border-white/60 hover:z-20 ${photo.offsetClass}`}
               >
-                {/* Photo Container matching 3:4 Aspect Ratio */}
-                <div className="relative w-full aspect-[3/4] overflow-hidden bg-black/40">
+                {/* Full-bleed Edge-to-Edge Image (No gaps) */}
+                <div className="relative w-full h-auto overflow-hidden">
                   <img
                     src={photo.src}
                     alt={photo.alt}
-                    className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
                     loading="eager"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1f0307]/90 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                  {/* Subtle Gradient & Hover Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1f0307] via-[#1f0307]/30 to-transparent opacity-80 group-hover:opacity-40 transition-opacity duration-300" />
                 </div>
 
-                {/* Card Caption */}
-                <div className="p-5 flex flex-col gap-1 bg-[#1f0307]/90 border-t border-white/10">
-                  <h3 className="font-didot-italic text-lg text-white font-normal group-hover:text-white/90 transition-colors">
+                {/* Abstract Hover Floating Badge */}
+                <div className="absolute bottom-0 left-0 right-0 p-5 flex flex-col gap-1 z-10">
+                  <h3 className="font-didot-italic text-xl text-white font-normal drop-shadow-md">
                     {photo.title}
                   </h3>
-                  <p className="font-inter text-[11px] text-white/70 tracking-wider uppercase">
+                  <p className="font-inter text-[11px] text-white/80 tracking-widest uppercase font-normal drop-shadow-sm">
                     {photo.subtitle}
                   </p>
                 </div>

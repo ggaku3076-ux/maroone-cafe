@@ -30,14 +30,14 @@ export default function Hero() {
             MAROONE&apos;
           </h1>
 
-          {/* Subheading with Inter for '&' symbol as requested */}
+          {/* Subheading with Inter for '&' symbol - Focused on Cafe Branding */}
           <p className="font-didot-italic text-lg sm:text-2xl text-white/95 font-normal tracking-wide drop-shadow-sm">
-            Caffe <span className="font-inter font-normal">&amp;</span> Food F<span className="font-inter font-normal">&amp;</span>B
+            Caffe <span className="font-inter font-normal">&amp;</span> Food F<span className="font-inter font-normal">&amp;</span>B Jombang
           </p>
 
-          {/* Rich SEO Description explaining Maroone' Caffe & Food F&B */}
+          {/* Sharply Focused Cafe Branding Description */}
           <p className="font-inter text-xs sm:text-sm text-white/90 leading-relaxed font-normal tracking-wide drop-shadow-sm max-w-md">
-            Maroone&apos; Caffe <span className="font-inter font-normal">&amp;</span> Food F<span className="font-inter font-normal">&amp;</span>B adalah destinasi kafe dan ruang santai modern di Kabupaten Jombang yang menyajikan racikan kopi autentik berbasis Espresso (biji Arabika &amp; Robusta pilihan) serta sajian kuliner istimewa dalam atmosfer Maroon yang hangat dan tenang.
+            Maroone&apos; Caffe adalah destinasi kafe utama di Kabupaten Jombang yang menyajikan racikan kopi autentik berbasis Espresso (biji Arabika &amp; Robusta pilihan terbaik), dipadukan dengan hidangan kuliner khas dan atmosfer Maroon yang hangat, intim, serta inspiratif.
           </p>
 
           {/* Clean Action Buttons */}
