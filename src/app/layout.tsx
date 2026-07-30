@@ -10,6 +10,7 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
+  display: "swap",
 });
 
 const playfairDisplay = Playfair_Display({
@@ -17,6 +18,7 @@ const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
   style: ["normal", "italic"],
   weight: ["400", "500"],
+  display: "swap",
 });
 
 export const viewport: Viewport = {
@@ -106,6 +108,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon.png?v=999" />
 
         {/* Preload All Ultra-Fast WebP Assets for 0ms Instant Page Render */}
+        <link rel="preload" href="/Asset/logo.webp" as="image" type="image/webp" />
         <link rel="preload" href="/Asset/hero_bg.webp" as="image" type="image/webp" />
         <link rel="preload" href="/Asset/menu_bg.webp" as="image" type="image/webp" />
         <link rel="preload" href="/Asset/menu/americano.webp" as="image" type="image/webp" />

@@ -56,9 +56,12 @@ export default function Navbar() {
             {/* Logo perbesar */}
             <div className="relative h-14 w-14 sm:h-16 sm:w-16 shrink-0 rounded-full aspect-square overflow-hidden border border-[#5b0612]/30 bg-[#3b040b] flex items-center justify-center shadow-lg">
               <img
-                src="/icon.png"
+                src="/Asset/logo.webp"
                 alt="Maroone Logo"
                 className="h-full w-full object-cover rounded-full"
+                width={64}
+                height={64}
+                loading="eager"
               />
             </div>
             <span className={`font-didot-italic text-2xl sm:text-3xl ${textColor} tracking-wider drop-shadow-sm`}>

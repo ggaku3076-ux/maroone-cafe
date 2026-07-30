@@ -14,9 +14,12 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-3.5">
               <div className="relative h-14 w-14 sm:h-16 sm:w-16 shrink-0 rounded-full aspect-square overflow-hidden border border-white/30 bg-[#5b0612] flex items-center justify-center">
                 <img
-                  src="/icon.png"
+                  src="/Asset/logo.webp"
                   alt="Maroone Logo"
                   className="h-full w-full object-cover rounded-full"
+                  width={64}
+                  height={64}
+                  loading="lazy"
                 />
               </div>
               <div className="flex flex-col">
