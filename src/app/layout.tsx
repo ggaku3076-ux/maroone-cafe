@@ -116,6 +116,12 @@ export default function RootLayout({
         <link rel="preload" href="/Asset/menu/moccacino_latte.webp" as="image" type="image/webp" />
         <link rel="preload" href="/Asset/menu/ice_cube.webp" as="image" type="image/webp" />
 
+        {/* Gallery Image Preloads */}
+        <link rel="preload" href="/Asset/gallery/gallery1.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/gallery/gallery2.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/gallery/gallery3.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/Asset/gallery/gallery4.webp" as="image" type="image/webp" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

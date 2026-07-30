@@ -1,8 +1,39 @@
 import Hero from "@/components/Hero";
 import Link from "next/link";
-import { ArrowRight, Coffee, Compass, ShieldCheck, Heart } from "lucide-react";
+import { ArrowRight, Coffee, Compass, ShieldCheck, Heart, Camera } from "lucide-react";
 
 export default function Home() {
+  const galleryPhotos = [
+    {
+      id: "photo-1",
+      src: "/Asset/gallery/gallery1.webp",
+      alt: "Suasana & Moment Maroone Caffe 1",
+      title: "Suasana Khas Maroone'",
+      subtitle: "Kehangatan Interior & Pencahayaan"
+    },
+    {
+      id: "photo-2",
+      src: "/Asset/gallery/gallery2.webp",
+      alt: "Suasana & Moment Maroone Caffe 2",
+      title: "Sudut Favorit Bersantai",
+      subtitle: "Kenyamanan Ruang Bicara"
+    },
+    {
+      id: "photo-3",
+      src: "/Asset/gallery/gallery3.webp",
+      alt: "Suasana & Moment Maroone Caffe 3",
+      title: "Momen Spesial Pengunjung",
+      subtitle: "Kebersamaan Penuh Kehangatan"
+    },
+    {
+      id: "photo-4",
+      src: "/Asset/gallery/gallery4.webp",
+      alt: "Suasana & Moment Maroone Caffe 4",
+      title: "Estetika Ruang & Kopi",
+      subtitle: "Kombinasi Seni & Cita Rasa"
+    },
+  ];
+
   return (
     <>
       {/* 1. Hero Section */}
@@ -71,6 +102,66 @@ export default function Home() {
               </div>
             </div>
 
+          </div>
+
+        </div>
+      </section>
+
+      {/* 2.5 Photo Gallery Slide Section (SLIDE TENGAH TENGAH) */}
+      <section 
+        id="galeri-suasana"
+        className="py-20 md:py-28 bg-[#1f0307] text-white border-t border-b border-white/10"
+        aria-labelledby="gallery-title"
+      >
+        <div className="mx-auto max-w-7xl px-6 md:px-12 text-center">
+          
+          <div className="max-w-2xl mx-auto mb-12 flex flex-col items-center gap-3">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-inter tracking-widest text-white uppercase">
+              <Camera className="h-3.5 w-3.5" />
+              <span>GALERI MOMEN &amp; SUASANA</span>
+            </div>
+
+            <h2 
+              id="gallery-title"
+              className="font-didot-italic text-3xl sm:text-5xl text-white font-normal tracking-wide"
+            >
+              Potret Kehangatan Maroone&apos;
+            </h2>
+
+            <p className="font-inter text-xs sm:text-sm text-white/80 leading-relaxed max-w-md">
+              Intip sekilas suasana, keceriaan pengunjung, dan sudut-sudut estetis yang menanti Anda di Maroone&apos; Caffe.
+            </p>
+          </div>
+
+          {/* Photo Cards Grid - Sized cleanly to match 3:4 natural photo aspect ratios */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            {galleryPhotos.map((photo) => (
+              <div
+                key={photo.id}
+                className="gsap-card group relative bg-[#5b0612]/60 rounded-3xl overflow-hidden border border-white/20 shadow-xl transition-all duration-300 hover:border-white/50 hover:shadow-2xl flex flex-col justify-between"
+              >
+                {/* Photo Container matching 3:4 Aspect Ratio */}
+                <div className="relative w-full aspect-[3/4] overflow-hidden bg-black/40">
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    loading="eager"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1f0307]/90 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                </div>
+
+                {/* Card Caption */}
+                <div className="p-5 flex flex-col gap-1 bg-[#1f0307]/90 border-t border-white/10">
+                  <h3 className="font-didot-italic text-lg text-white font-normal group-hover:text-white/90 transition-colors">
+                    {photo.title}
+                  </h3>
+                  <p className="font-inter text-[11px] text-white/70 tracking-wider uppercase">
+                    {photo.subtitle}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
 
         </div>
